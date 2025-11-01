@@ -36,24 +36,18 @@
     <table id="table_id" class="table table-striped table-bordered" cellspacing="0" width="100%">
       <thead>
               <tr>
-                  <th width="90px">Networks</th>
+                  <th width="90px">Network</th>
                   <th width="60px">CIDR</th>
-                  <th width="90px">Broadcast</ht>
-                  <th width="60px">VLAN ID</th>
-                  <th>Note1</th>
-                  <th>Note2</th>
+                  <th>Note</th>
                   <th width="120px">Operation</th>
               </tr>
       </thead>
       <tbody>
              <?php foreach($networks as $network): ?>
              <tr>
-                 <td><?php ip2host($network['networks'], $network['cidr']); ?></td>
+                 <td><?php ip2host($network['network'], $network['cidr']); ?></td>
                  <td><?php echo $network['cidr']; ?></td>
-                 <td><?php echo $network['broadcast_address']; ?></td>
-                 <td><?php echo $network['vlan_id']; ?></td>
-                 <td><?php echo $network['note1']; ?></td>
-                 <td><?php echo $network['note2']; ?></td>
+                 <td><?php echo $network['note']; ?></td>
                  <td>
                 <button class="btn btn-warning btn-xs" onclick="edit_network(<?php echo $network['id'];?>)">
                   <i class="glyphicon glyphicon-pencil"></i> Edit

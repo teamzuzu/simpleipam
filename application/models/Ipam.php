@@ -30,29 +30,26 @@ class Ipam extends CI_Model {
     function get_networks($limit, $start, $st = NULL)
     {
         if ($st == "NIL") $st = "";
-        //$sql = "select * from networks where networks like '%$st%' limit " . $start . ", " . $limit;
-        $sql1 = " select * from networks where networks like '%$st%' ";
-        $sql2 = " or cidr like '%$st%' or broadcast_address like '%$st%' or vlan_id like '%$st%' ";
-        $sql3 = " or note1 like '%$st%' or note2 like '%$st%' ";
+        $sql1 = " select * from networks where network like '%$st%' ";
+        $sql2 = " or note like '%$st%' ";
         //https://stackoverflow.com/questions/23092783/best-way-to-sort-by-ip-addresses-in-sql
-        //$sql_order = " order by networks ";
-        //$sql_order = " order by CAST(substr(networks,1,instr(networks,'.')) AS NUMERIC) ";
-        $sql_order = " order by CAST(substr(trim(networks),1,instr(trim(networks),'.')-1) AS INTEGER), CAST(substr(substr(trim(networks),length(substr(trim(networks),1,instr(trim(networks),'.')))+1,length(networks)) ,1, instr(substr(trim(networks),length(substr(trim(networks),1,instr(trim(networks),'.')))+1,length(networks)),'.')-1) AS INTEGER), CAST(substr(substr(trim(networks),length(substr(substr(trim(networks),length(substr(trim(networks),1,instr(trim(networks),'.')))+1,length(networks)) ,1, instr(substr(trim(networks),length(substr(trim(networks),1,instr(trim(networks),'.')))+1,length(networks)),'.')))+length(substr(trim(networks),1,instr(trim(networks),'.')))+1,length(networks)) ,1, instr(substr(trim(networks),length(substr(substr(trim(networks),length(substr(trim(networks),1,instr(trim(networks),'.')))+1,length(networks)) ,1, instr(substr(trim(networks),length(substr(trim(networks),1,instr(trim(networks),'.')))+1,length(networks)),'.')))+length(substr(trim(networks),1,instr(trim(networks),'.')))+1,length(networks)),'.')-1) AS INTEGER), CAST(substr(trim(networks),length(substr(substr(trim(networks),length(substr(substr(trim(networks),length(substr(trim(networks),1,instr(trim(networks),'.')))+1,length(networks)) ,1, instr(substr(trim(networks),length(substr(trim(networks),1,instr(trim(networks),'.')))+1,length(networks)),'.')))+length(substr(trim(networks),1,instr(trim(networks),'.')))+1,length(networks)) ,1, instr(substr(trim(networks),length(substr(substr(trim(networks),length(substr(trim(networks),1,instr(trim(networks),'.')))+1,length(networks)) ,1, instr(substr(trim(networks),length(substr(trim(networks),1,instr(trim(networks),'.')))+1,length(networks)),'.')))+length(substr(trim(networks),1,instr(trim(networks),'.')))+1,length(networks)),'.')))+ length(substr(trim(networks),1,instr(trim(networks),'.')))+length(substr(substr(trim(networks),length(substr(trim(networks),1,instr(trim(networks),'.')))+1,length(networks)) ,1, instr(substr(trim(networks),length(substr(trim(networks),1,instr(trim(networks),'.')))+1,length(networks)),'.')))+1,length(trim(networks))) AS INTEGER) ";
+        $sql_order = " order by network ";
+	//$sql_order = " order by CAST(substr(networks,1,instr(networks,'.')) AS NUMERIC) ";
+	//
         $sql_limit = " limit " . $start . ", " . $limit;
-        $sql = "$sql1 $sql2 $sql3 $sql_order $sql_limit";
-        $query = $this->db->query($sql);
-        //return $query->result();
+	$sql = "$sql1 $sql2 $sql_order $sql_limit";
+
+	$query = $this->db->query($sql);
+
         return $query->result_array();
     }
     
     function get_networks_count($st = NULL)
     {
         if ($st == "NIL") $st = "";
-        //$sql = "select * from networks where networks like '%$st%'";
-        $sql1 = "select * from networks where networks like '%$st%' ";
-        $sql2 = "or cidr like '%$st%' or broadcast_address like '%$st%' or vlan_id like '%$st%' ";
-        $sql3 = "or note1 like '%$st%' or note2 like '%$st%' ";
-        $sql = "$sql1 $sql2 $sql3";
+        $sql1 = "select * from networks where network like '%$st%' ";
+        $sql2 = "or note1 like '%$st%' ";
+        $sql = "$sql1 $sql2";
         $query = $this->db->query($sql);
         return $query->num_rows();
     }
@@ -60,10 +57,9 @@ class Ipam extends CI_Model {
 
     function networks_search($str) {
         $str = urldecode($str); // for japanese
-        $this->db->like('networks', "$str");
-        $this->db->or_like('note1', $str); 
-        $this->db->or_like('note2', $str); 
-        $this->db->order_by("networks", "ASC"); 
+        $this->db->like('network', "$str");
+        $this->db->or_like('note', $str); 
+        $this->db->order_by("network", "ASC"); 
         $query = $this->db->get('networks');
 
         if ($query->num_rows() <= 0) {
@@ -80,7 +76,6 @@ class Ipam extends CI_Model {
         $this->db->from("networks");
 		$this->db->where('id',$id);
 		$query = $this->db->get();
- 
 		return $query->row();
 	}
  
@@ -110,10 +105,8 @@ class Ipam extends CI_Model {
     function truncate_networks() {
         $sql = 'delete from networks where id > 0 ';
         $this->db->query($sql);
- 
         $sql = 'VACUUM;';
         $this->db->query($sql);
-
     }
 
 
