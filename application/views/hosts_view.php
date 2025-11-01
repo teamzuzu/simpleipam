@@ -22,8 +22,6 @@
       </div>
       <div class="col-sm-6 text-right">
         <button class="btn btn-success" onclick="add_hosts()"><i class="glyphicon glyphicon-plus"></i> Add Host</button>
-        <button class="btn btn-success" onclick="location.href='<?php echo site_url('hosts/csv')?>'">
-          <i class="glyphicon glyphicon-retweet"></i> CSV Import/Export</button>
       </div>
     </div>
 
@@ -71,10 +69,6 @@
 
     <br \>
      <div class="row">
-         <div class="col-md-3">
-             <?php  $count = ($total_rows == 0) ? "$total_rows entries" : "Showing $start to $end of $total_rows entries"; ?>
-             <?php  echo $count; ?>
-         </div>
          <div class="col-md-9">
              <?php echo $pagination; ?>
          </div>

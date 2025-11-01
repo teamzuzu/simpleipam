@@ -31,21 +31,9 @@
           <ul class="nav navbar-nav">
              <li><a href="<?php echo base_url('/') ?>networks">Networks</a></li>
              <li><a href="<?php echo base_url('/') ?>hosts">Hosts</a></li>
-          </ul>
-          <ul class="nav navbar-nav">
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Note<span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                  <li><a href="<?php echo base_url('/') ?>private_address">Private addresses</a></li>
-                  <li><a href="<?php echo base_url('/') ?>cidr">CIDR</a></li>
-                </ul>
-              </li>
-          </ul>
-          <!--
-          <ul class="nav navbar-nav">
-             <li><a href="<?php echo base_url('/') ?>help">Help</a></li>
-          </ul>
-          -->
+             <li><a href="<?php echo base_url('/') ?>hosts">Docs</a></li>
+	  </ul>
+
          <form class="navbar-form navbar-left" action="<?php echo base_url('/') ?>hosts/search" method="post">
             <div class="form-group">
               <input type="text" name="host_name" class="form-control" placeholder="Search for hosts"  value="<?php echo set_value('host_name', $host_name); ?>">
@@ -55,4 +43,3 @@
         </div><!--/.nav-collapse -->
       </div>
     </nav>
-

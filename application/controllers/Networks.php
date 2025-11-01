@@ -10,16 +10,13 @@ class Networks extends CI_Controller {
         $this->load->helper('url');
         $this->load->helper('form');
         $this->load->helper('myip');
-        //$this->load->helper(array('form','url'));
         
         //library
-		$this->load->library('session');
-        $this->load->library('csvimport');
+	$this->load->library('session');
         $this->load->library('pagination');
 
         //model
         $this->load->model('Ipam');
-        //$this->load->database();
     }
 
 
@@ -65,28 +62,22 @@ class Networks extends CI_Controller {
         
         $data['pagination'] = $this->pagination->create_links();
 
-        //$data['networks'] =$this->Ipam->get_all_networks();
-
         $data['total_rows'] = $config['total_rows'];
         $data['start'] = $data['page'] + 1;
         $data['end'] = $data['start'] + $config['per_page'] - 1 ;
 
-		$data['title'] = 'SimpleIPAM Networks';
-		$this->load->view('template/header', $data);
-		$this->load->view('networks_view', $data );
-		$this->load->view('template/footer' );
+	$data['title'] = 'SimpleIPAM Networks';
+	$this->load->view('template/header', $data);
+	$this->load->view('networks_view', $data );
+	$this->load->view('template/footer' );
     }
     
 
     function search()
     {
         $data["host_name"]="";    //this is form in header
-        //input search
-        // post
         $search = ($this->input->post("network_name"))? $this->input->post("network_name") : "NIL";
-        // get
         $search = ($this->uri->segment(3)) ? $this->uri->segment(3) : $search;
-        // url encode for japanese
         $search= urldecode($search);
 
         
@@ -136,10 +127,10 @@ class Networks extends CI_Controller {
 
 
         //load view
-		$data['title'] = 'SimpleIPAM Networks';
-		$this->load->view('template/header', $data);
-		$this->load->view('networks_view', $data );
-		$this->load->view('template/footer' );
+	$data['title'] = 'SimpleIPAM Networks';
+	$this->load->view('template/header', $data);
+	$this->load->view('networks_view', $data );
+	$this->load->view('template/footer' );
     }
 
 	
@@ -148,16 +139,14 @@ class Networks extends CI_Controller {
 		$data = array(
 		  'network' => $this->input->post('network'),
 		  'cidr' => $this->input->post('cidr'),
-		  'note' => $this->input->post('note1'),
+		  'note' => $this->input->post('note'),
 		);
 		$insert = $this->Ipam->networks_add($data);
 		echo json_encode(array("status" => TRUE));
 	}
 
-	public function ajax_edit($id)
-	{
+	public function ajax_edit($id){
 		$data = $this->Ipam->networks_get_by_id($id);
-
 		echo json_encode($data);
 	}
 
@@ -174,8 +163,7 @@ class Networks extends CI_Controller {
 	}
 
 
-	public function networks_delete($id)
-	{
+	public function networks_delete($id){
 		$this->Ipam->networks_delete_by_id($id);
 		echo json_encode(array("status" => TRUE));
 	}
@@ -216,126 +204,5 @@ class Networks extends CI_Controller {
             exit();
         }
     }
-
-
-    /*======================================================
-     * CSV
-     *======================================================
-    */
-	public function csv()
-	{
-        $data["host_name"]="";    //this is form in header
-		$data['title'] = 'SimpleIPAM Networks';
-
-		$this->load->view('template/header', $data);
-		$this->load->view('networks_csv');
-		$this->load->view('template/footer' );
-	}
-
-	public function export_csv() {
-		$file_name = 'networks_'.date("Y-m-d h-i-s").'.csv';
-		$delimiter = ",";
-        $newline = "\r\n";
-		$query = $this->db->query('SELECT networks, cidr, broadcast_address, vlan_id, note1, note2 FROM networks WHERE 1');
-		$this->load->dbutil();
-		$data = $this->dbutil->csv_from_result($query, $delimiter, $newline);
-		$this->load->helper('download');
-		force_download($file_name, $data);  
-		exit();
-	}
-
-	function import_csv() {
-        $data["host_name"]="";    //this is form in header
-        $data['error'] = '';    //initialize image upload error array to empty
- 
-        $config['upload_path'] = './uploads/';
-        $config['allowed_types'] = 'csv';
-        $config['max_size'] = '50000';  //50,000KB = 50MB
- 
-        $this->load->library('upload', $config);
- 
-
-        // If upload failed, display error
-        if (!$this->upload->do_upload()) {
-            $data['error'] = $this->upload->display_errors();
- 
-			$this->load->view('template/header', $data);
-			$this->load->view('networks_csv', $data);
-			$this->load->view('template/footer' );
-        } else {
-            $file_data = $this->upload->data();
-            $file_path =  './uploads/'.$file_data['file_name'];
- 
-            if ($this->csvimport->get_array($file_path)) {
-                $csv_array = $this->csvimport->get_array($file_path);
-                foreach ($csv_array as $row) {
-                    $insert_data = array(
-                        'networks'=>$row['networks'],
-                        'cidr'=>$row['cidr'],
-			'note'=>$row['note'],
-                    );
-                    $this->Ipam->networks_insert_csv($insert_data);
-                }
-                $this->session->set_flashdata('success', 'Csv Data Imported Succesfully');
-                //redirect(base_url().'networks/export_csv');
-                //echo "<pre>"; print_r($insert_data);
-            } else 
-				$data['error'] = "Error occured";
-				$this->load->view('template/header', $data);
-				$this->load->view('networks_csv', $data);
-                $this->load->view('template/footer' );
-
-        }
-        //echo "$file_path";
-        unlink($file_path);
- 
-	}
-
- 
-     function importcsv_purge_add() {
-        $data['error'] = '';    //initialize image upload error array to empty
-        $config['upload_path'] = './uploads/';
-        $config['allowed_types'] = 'csv';
-        $config['max_size'] = '1000';
-        $this->load->library('upload', $config);
-
-        $this->Ipam->truncate_networks();
-
-        // If upload failed, display error
-        if (!$this->upload->do_upload()) {
-            $data['error'] = $this->upload->display_errors();
-
-            $this->load->view('template/header', $data);
-            $this->load->view('networks_csv', $data);
-            $this->load->view('template/footer' );
-        } else {
-            $file_data = $this->upload->data();
-            $file_path =  './uploads/'.$file_data['file_name'];
-            if ($this->csvimport->get_array($file_path)) {
-                    //import csv
-                    $csv_array = $this->csvimport->get_array($file_path);
-                    foreach ($csv_array as $row) {
-                        $insert_data = array(
-                        'id'=>$row['id'],
-                        'networks'=>$row['networks'],
-                        'cidr'=>$row['cidr'],
-                        'broadcast_address'=>$row['broadcast_address'],
-                        'vlan_id'=>$row['vlan_id'],
-                        'note1'=>$row['note1'],
-                        'note2'=>$row['note2'],
-                    );
-                    $this->Ipam->networks_insert_csv($insert_data);
-                }
-                $this->session->set_flashdata('success', 'Csv Data Imported Succesfully');
-                //redirect(base_url().'networks/export_csv');
-                //echo "<pre>"; print_r($insert_data);
-            } else 
-                $data['error'] = "Error occured";
-                $this->load->view('template/header', $data);
-                $this->load->view('networks_csv', $data);
-                $this->load->view('template/footer' );
-        }
-    }
-
 
 }

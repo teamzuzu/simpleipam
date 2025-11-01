@@ -23,8 +23,6 @@
       <div class="col-sm-6 text-right">
         <button class="btn btn-success" onclick="add_networks()">
             <i class="glyphicon glyphicon-plus"></i> Add Network</button>
-        <button class="btn btn-success" onclick="location.href='<?php echo site_url('networks/csv')?>'">
-            <i class="glyphicon glyphicon-retweet"></i> CSV Import/Export</button>
       </div>
     </div>
 
@@ -67,10 +65,6 @@
 
      <br \>
      <div class="row">
-         <div class="col-md-3">
-             <?php  $count = ($total_rows == 0) ? "$total_rows entries" : "Showing $start to $end of $total_rows entries"; ?>
-             <?php  echo $count; ?>
-         </div>
          <div class="col-md-9">
              <?php echo $pagination; ?>
          </div>
@@ -258,7 +252,7 @@
             <div class="form-group">
               <label class="control-label col-md-3">Note</label>
               <div class="col-md-9">
-                 <input name="note1" placeholder="Production DMZ Operation" class="form-control" type="text">
+                 <input name="note" placeholder="Production DMZ Operation" class="form-control" type="text">
               </div>
 	    </div>
 

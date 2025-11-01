@@ -7,20 +7,11 @@ class Ipam extends CI_Model {
     $this->load->database();
   } 
 
-    /*======================================================
-     *Networks
-     *======================================================
-     */
-
-    function get_all_networks() {
-        $this->db->order_by("networks", 'ASC');
-        $query = $this->db->get("networks");
-        return $query->result_array();
- 
-        //if($query->num_rows() > 0) {
-        //    return $query->result_array();
-        //}
-    }
+  function get_all_networks() {
+    $this->db->order_by("networks", 'ASC');
+    $query = $this->db->get("networks");
+    return $query->result_array();
+   }
 
     //fetch networks
     function get_networks($limit, $start, $st = NULL)
@@ -28,15 +19,11 @@ class Ipam extends CI_Model {
         if ($st == "NIL") $st = "";
         $sql1 = " select * from networks where network like '%$st%' ";
         $sql2 = " or note like '%$st%' ";
-        //https://stackoverflow.com/questions/23092783/best-way-to-sort-by-ip-addresses-in-sql
         $sql_order = " order by network ";
 	//$sql_order = " order by CAST(substr(networks,1,instr(networks,'.')) AS NUMERIC) ";
-	//
         $sql_limit = " limit " . $start . ", " . $limit;
 	$sql = "$sql1 $sql2 $sql_order $sql_limit";
-
 	$query = $this->db->query($sql);
-
         return $query->result_array();
     }
     
@@ -81,9 +68,7 @@ class Ipam extends CI_Model {
 		return $this->db->insert_id();
 	}
  
-	public function networks_update($where, $data)
-	{
-		//$this->db->update($this->table, $data, $where);
+	public function networks_update($where, $data){
 		$this->db->update("networks", $data, $where);
 		return $this->db->affected_rows();
 	}
@@ -94,9 +79,6 @@ class Ipam extends CI_Model {
 		$this->db->delete($this->table);
 	}
 
-    public function networks_insert_csv($data) {
-        $this->db->insert('networks', $data);
-    }
 
     function truncate_networks() {
         $sql = 'delete from networks where id > 0 ';
@@ -105,18 +87,10 @@ class Ipam extends CI_Model {
         $this->db->query($sql);
     }
 
-
-    /*======================================================
-     * Hosts
-     *======================================================
-    */
     function get_all_hosts() {
         $query = $this->db->get("hosts");
         return $query->result_array();
  
-        //if($query->num_rows() > 0) {
-        //    return $query->result_array();
-        //}
     }
 
     //fetch hosts
