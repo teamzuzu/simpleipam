@@ -1,0 +1,24 @@
+PRAGMA foreign_keys=OFF;
+BEGIN TRANSACTION;
+CREATE TABLE IF NOT EXISTS "networks"(
+        `id`    INTEGER NOT NULL,
+        `network`      TEXT NOT NULL,
+        `cidr`  INTEGER,
+        `note` TEXT,
+        PRIMARY KEY(`id`)
+);
+INSERT INTO networks VALUES(1,'10.0.1.0',25,'Production DMZ Operation US');
+INSERT INTO networks VALUES(2,'10.0.88.0',25,'Production DMZ Operation EU');
+CREATE TABLE IF NOT EXISTS "hosts" (
+	`id`	INTEGER NOT NULL,
+	`ip_address`	TEXT NOT NULL,
+	`subnet_mask`	TEXT NOT NULL,
+	`host`	TEXT,
+	`mac1`  TEXT,
+        `mac2`  TEXT,
+	`note`	TEXT,
+	PRIMARY KEY(`id`)
+);
+INSERT INTO hosts VALUES(1,'10.0.0.1','255.255.255.0','test-us','samplemac1', 'samplemac2', 'note');
+INSERT INTO hosts VALUES(2,'10.0.88.1','255.255.255.0','test-eu','samplemac1', 'samplemac2', 'note');
+COMMIT;
