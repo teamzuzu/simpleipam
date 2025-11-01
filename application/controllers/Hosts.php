@@ -64,9 +64,6 @@ class Hosts extends CI_Controller {
         $data['hosts'] = $this->Ipam->get_hosts($config["per_page"], $data['page'], NULL);
 
         $data['pagination'] = $this->pagination->create_links();
-        
-        //$data['hosts'] =$this->Ipam->get_all_hosts();
-
         $data['total_rows'] = $config['total_rows'];
         $data['start'] = $data['page'] + 1;
         $data['end'] = $data['start'] + $config['per_page'] - 1 ;
@@ -150,7 +147,7 @@ class Hosts extends CI_Controller {
 				'ip_address' => $this->input->post('ip_address'),
 				'subnet_mask' => $this->input->post('subnet_mask'),
 				'host' => $this->input->post('host'),
-                'mac_address' => $this->input->post('mac_address'),
+                'mac' => $this->input->post('mac'),
 				'note' => $this->input->post('note'),
 			);
 		$insert = $this->Ipam->hosts_add($data);

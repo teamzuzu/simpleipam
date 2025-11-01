@@ -14,11 +14,10 @@ CREATE TABLE IF NOT EXISTS "hosts" (
 	`ip_address`	TEXT NOT NULL,
 	`subnet_mask`	TEXT NOT NULL,
 	`host`	TEXT,
-	`mac1`  TEXT,
-        `mac2`  TEXT,
+	`mac`  TEXT,
 	`note`	TEXT,
 	PRIMARY KEY(`id`)
 );
-INSERT INTO hosts VALUES(1,'10.0.0.1','255.255.255.0','test-us','samplemac1', 'samplemac2', 'note');
-INSERT INTO hosts VALUES(2,'10.0.88.1','255.255.255.0','test-eu','samplemac1', 'samplemac2', 'note');
+INSERT INTO hosts VALUES(1,'10.0.0.1','255.255.255.0','test-us','samplemac1', 'note');
+INSERT INTO hosts VALUES(2,'10.0.88.1','255.255.255.0','test-eu','samplemac1', 'note');
 COMMIT;

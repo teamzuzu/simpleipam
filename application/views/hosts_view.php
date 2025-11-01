@@ -38,8 +38,7 @@
              <th width="100px">IP Address</th>
              <th width="100px">Subnet mask</th>
              <th>Host</th>
-             <th>Mac1</th>
-             <th>Mac2</th>
+             <th>Mac</th>
              <th>Note</th>
              <th width="120px">Operation</th>
          </tr>
@@ -50,8 +49,7 @@
              <td><?php echo $host['ip_address']; ?></td>
              <td><?php echo $host['subnet_mask']; ?></td>
              <td><?php echo $host['host']; ?></td>
-             <td><?php echo $host['mac1']; ?></td>
-             <td><?php echo $host['mac2']; ?></td>
+             <td><?php echo $host['mac']; ?></td>
              <td><?php echo $host['note']; ?></td>
              <td>
                   <button class="btn btn-warning btn-xs" onclick="edit_host(<?php echo $host['id'];?>)">
@@ -67,14 +65,6 @@
          </tbody>
 
           <tfoot>
-              <tr>
-                  <th>IP Address</th>
-                  <th>Subnet mask</th>
-                  <th>Host</th>
-                  <th>MAC</th>
-                  <th>Note</th>
-                  <th>Operation</th>
-              </tr>
          </tfoot>
 
     </table>
@@ -155,7 +145,7 @@
             $('[name="ip_address"]').val(data.ip_address);
             $('[name="subnet_mask"]').val(data.subnet_mask);
             $('[name="host"]').val(data.host);
-            $('[name="mac_address"]').val(data.mac_address);
+            $('[name="mac"]').val(data.mac);
             $('[name="note"]').val(data.note);
 
             $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
@@ -286,7 +276,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="control-label col-md-3">mac_address</label>
+              <label class="control-label col-md-3">mac</label>
               <div class="col-md-6">
                 <input name="mac_address" placeholder="test-server-01" class="form-control" type="text">
                 <span class="help-block"></span>
@@ -313,9 +303,3 @@
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
   <!-- End Bootstrap modal -->
-
-
-
-
-
-

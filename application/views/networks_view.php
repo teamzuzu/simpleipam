@@ -61,15 +61,6 @@
         </tbody>
 
         <tfoot>
-           <tr>
-               <th>Networks</th>
-               <th>CIDR</th>
-               <th>Broadcast</ht>
-               <th>VLAN ID</th>
-               <th>Note1</th>
-               <th>Note2</th>
-               <th>Operation</th>
-           </tr>
          </tfoot>
 
      </table>
@@ -265,39 +256,15 @@
               <div class="col-md-3">
               <p class="text-left">*Required</p>
               </div>
-            </div>
+	    </div>
+
             <div class="form-group">
-              <label class="control-label col-md-3">Broadcast Address</label>
-              <div class="col-md-6">
-                <input name="broadcast_address" placeholder="192.168.100.255" class="form-control" type="text">
-                <span class="help-block"></span>
-              </div>
-              <div class="col-md-3">
-              <p class="text-left">*Required</p>
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="control-label col-md-3">VLAN ID</label>
-              <div class="col-md-6">
-                 <input name="vlan_id" placeholder="100" class="form-control" type="text">
-              </div>
-              <div class="col-md-3">
-                <p class="text-left">1 - 4094</p>
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="control-label col-md-3">Note1</label>
+              <label class="control-label col-md-3">Note</label>
               <div class="col-md-9">
                  <input name="note1" placeholder="Production DMZ Operation" class="form-control" type="text">
               </div>
-            </div>
-            <div class="form-group">
-              <label class="control-label col-md-3">Note2</label>
-              <div class="col-md-9">
-                 <input name="note2" placeholder="Tokyo DC" class="form-control" type="text">
-              </div>
-            </div>
- 
+	    </div>
+
           </div>
         </form>
           </div>
