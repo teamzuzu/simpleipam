@@ -1,12 +1,28 @@
 # SimpleIPAM - Simple IP address management
 
-## Docker cmds
+## Upstream
+* https://github.com/kuritaka/SimpleIPAM ( original ) 
+* https://github.com/dimxyp/SimpleIPAM ( fork added Mac's ) 
 
 
 ## What is SimpleIPAM?
 SimpleIPAM is IP address management(IPAM) for Small and medium-sized enterprises.
 This can manage IP address and networks like VLAN.
+This is very simple and very useful.
 
+## Screenshots
+#### Screenshot1
+![Network1](screenshots/Networks1.png)
+#### Screenshot2
+![Hosts1](screenshots/Hosts1.png)
+#### Screenshot3
+![Hosts2](screenshots/Hosts2.png)
+
+
+## Features
+* Modal Popup
+* Using SQLite
+* CSV Export / Import
 
 ## Dependencies
 * PHP >= 5.3.7 (recommends PHP 5.4 or newer)
@@ -33,13 +49,25 @@ This can manage IP address and networks like VLAN.
 Edit $config['per_page'] in controllers/Networks.php and controllers/Hosts.php  
 For example, change  "5" to "300"  
 
-## ChangeLog
-vTZ
- * pick up fork revert README.md
+```
+public function index()
+{
+  ....
+  $config['per_page'] = "5";
+  ....
+}
 
+function search()
+{
+  ....
+  $config['per_page'] = "5";
+  ....
+}
+```
+
+## ChangeLog
 v2.0
   * Delete Model Column in hosts
 
 v1.0
   * First Release
-
