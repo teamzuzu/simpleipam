@@ -3,24 +3,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Hosts extends CI_Controller {
 
+  function __construct() {
+    parent::__construct();
 
-    function __construct() {
-        parent::__construct();
-        //helper
-        $this->load->helper('url');
-        $this->load->helper('form');
-        $this->load->helper('myip');
-        //$this->load->helper(array('form','url'));
+    $this->load->helper('url');
+    $this->load->helper('form');
+    $this->load->helper('myip');
         
-        //library
-		$this->load->library('session');
-        $this->load->library('csvimport');
-        $this->load->library('pagination');
+    $this->load->library('session');
+    $this->load->library('pagination');
 
-        //model
-        //$this->load->database();
-        $this->load->model('Ipam');
-    }
+    $this->load->model('Ipam');
+  }
 
 	public function index() {
 
@@ -139,31 +133,27 @@ class Hosts extends CI_Controller {
 
 	
     	public function hosts_add(){
-
-        $this->_validate();
-		$data = array(
-				'ip_address' => $this->input->post('ip_address'),
-				'subnet_mask' => $this->input->post('subnet_mask'),
-				'host' => $this->input->post('host'),
-                'mac' => $this->input->post('mac'),
-				'note' => $this->input->post('note'),
-			);
+          $this->_validate();
+	  $data = array(
+	    'ip_address' => $this->input->post('ip_address'),
+            'subnet_mask' => $this->input->post('subnet_mask'),
+            'host' => $this->input->post('host'),
+            'mac' => $this->input->post('mac'),
+            'note' => $this->input->post('note'),
+        	);
 		$insert = $this->Ipam->hosts_add($data);
 		echo json_encode(array("status" => TRUE));
 	}
 
-	public function ajax_edit($id)
-	{
+	public function ajax_edit($id){
 		$data = $this->Ipam->hosts_get_by_id($id);
-
 		echo json_encode($data);
 	}
 
 
-	public function hosts_update()
-	{
-    $this->_validate();
-	$data = array(
+	public function hosts_update(){
+          $this->_validate();
+	  $data = array(
 	'ip_address' => $this->input->post('ip_address'),
 	'subnet_mask' => $this->input->post('subnet_mask'),
 	'host' => $this->input->post('host'),
@@ -175,8 +165,7 @@ class Hosts extends CI_Controller {
 	}
 
 
-	public function hosts_delete($id)
-	{
+	public function hosts_delete($id){
 		$this->Ipam->hosts_delete_by_id($id);
 		echo json_encode(array("status" => TRUE));
 	}
@@ -199,14 +188,12 @@ class Hosts extends CI_Controller {
 
 
         $subnet_mask=$this->input->post('subnet_mask');
-        /*
         if (!is_numeric($subnet_mask))
         {
             $data['inputerror'][] = 'subnet_mask';
             $data['error_string'][] = 'Subnet mask must be number';
             $data['status'] = FALSE;
         }
-        */
         if($subnet_mask == '')
         {
             $data['inputerror'][] = 'subnet_mask';
@@ -214,104 +201,16 @@ class Hosts extends CI_Controller {
             $data['status'] = FALSE;
         }
 
-        /* 
-        if($this->input->post('subnet_mask') == '')
-        {
-            $data['inputerror'][] = 'subnet_mask';
-            $data['error_string'][] = 'Subnet mask is required';
-            $data['status'] = FALSE;
-        }
-        */
- 
         if($this->input->post('host') == '')
         {
             $data['inputerror'][] = 'host';
             $data['error_string'][] = 'host is required';
             $data['status'] = FALSE;
         }
-
  
-        if($data['status'] === FALSE)
-        {
+        if($data['status'] === FALSE){
             echo json_encode($data);
             exit();
         }
- 
-
     }
-
-
-    /*======================================================
-     * CSV
-     *======================================================
-    */
-	public function csv()
-	{
-        $data["host_name"]="";    //this is form in header
-		$data['title'] = 'SimpleIPAM Hosts';
-
-		$this->load->view('template/header', $data);
-		$this->load->view('hosts_csv');
-		$this->load->view('template/footer' );
-	}
-
-	public function export_csv() {
-		$file_name = 'hosts_'.date("Y-m-d h-i-s").'.csv';
-		$delimiter = ",";
-        	$newline = "\r\n";
-		$query = $this->db->query('SELECT ip_address, subnet_mask, host, mac, note FROM hosts WHERE 1');
-		$this->load->dbutil();
-		$data = $this->dbutil->csv_from_result($query, $delimiter, $newline);
-		$this->load->helper('download');
-		force_download($file_name, $data);  
-		exit();
-	}
-
-
-	function import_csv() {
-        $data['error'] = '';    //initialize image upload error array to empty
- 
-        $config['upload_path'] = './uploads/';
-        $config['allowed_types'] = 'csv';
-        $config['max_size'] = '50000';  //50,000KB = 50MB
- 
-        $this->load->library('upload', $config);
- 
-
-        // If upload failed, display error
-        if (!$this->upload->do_upload()) {
-            $data['error'] = $this->upload->display_errors();
- 
-			$this->load->view('template/header', $data);
-			$this->load->view('hosts_csv', $data);
-			$this->load->view('template/footer' );
-        } else {
-            $file_data = $this->upload->data();
-            $file_path =  './uploads/'.$file_data['file_name'];
- 
-            if ($this->csvimport->get_array($file_path)) {
-                $csv_array = $this->csvimport->get_array($file_path);
-                foreach ($csv_array as $row) {
-                    $insert_data = array(
-                        'ip_address'=>$row['ip_address'],
-                        'subnet_mask'=>$row['subnet_mask'],
-			'host'=>$row['host'],
-                        'mac'=>$row['mac'],
-			'note'=>$row['note'],
-                    );
-                    $this->Ipam->hosts_insert_csv($insert_data);
-                }
-                $this->session->set_flashdata('success', 'Csv Data Imported Succesfully');
-                //redirect(base_url().'networks/export_csv');
-                //echo "<pre>"; print_r($insert_data);
-            } else 
-				$data['error'] = "Error occured";
-				$this->load->view('template/header', $data);
-				$this->load->view('hosts_csv', $data);
-				$this->load->view('template/footer' );
-        }
-        //echo "$file_path";
-        unlink($file_path);
-	}    
-
 }

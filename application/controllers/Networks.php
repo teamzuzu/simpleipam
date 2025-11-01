@@ -19,9 +19,8 @@ class Networks extends CI_Controller {
         $this->load->model('Ipam');
     }
 
+    public function index(){
 
-	public function index()
-	{
         $data["host_name"]="";    //this is form in header
         $data["network_name"]="";
 
@@ -154,7 +153,7 @@ class Networks extends CI_Controller {
 	public function networks_update(){
         	$this->_validate();
 	$data = array(
-		'networks' => $this->input->post('networks'),
+		'network' => $this->input->post('network'),
 		'cidr' => $this->input->post('cidr'),
 		'note' => $this->input->post('note'),
 		);

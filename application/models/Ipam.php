@@ -53,17 +53,14 @@ class Ipam extends CI_Model {
     }
 
 
-	public function networks_get_by_id($id)
-	{
-        //$this->db->from($this->table);
-        $this->db->from("networks");
-		$this->db->where('id',$id);
-		$query = $this->db->get();
-		return $query->row();
+	public function networks_get_by_id($id){
+          $this->db->from("networks");
+   	  $this->db->where('id',$id);
+   	  $query = $this->db->get();
+	  return $query->row();
 	}
  
-	public function networks_add($data)
-	{
+	public function networks_add($data){
 		$this->db->insert($this->table, $data);
 		return $this->db->insert_id();
 	}
