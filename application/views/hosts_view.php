@@ -115,8 +115,6 @@
       var save_method; //for save method string
       var table;
 
-
-
       function add_hosts()
     {
       save_method = 'add';
@@ -278,7 +276,7 @@
             <div class="form-group">
               <label class="control-label col-md-3">mac</label>
               <div class="col-md-6">
-                <input name="mac_address" placeholder="test-server-01" class="form-control" type="text">
+                <input name="mac" placeholder="test-server-01" class="form-control" type="text">
                 <span class="help-block"></span>
               </div>
               <div class="col-md-3">
@@ -302,4 +300,3 @@
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-  <!-- End Bootstrap modal -->

@@ -32,22 +32,5 @@ class Top extends CI_Controller {
 
 
 	}
-
 	
-/*
-	public function result()
-	{
-		$data['title'] = 'SimpleIPAM Top';
-		$this->load->view('template/header', $data);
-		$this->load->view('result');
-		$this->load->view('template/footer');
-	}
-	public function note()
-	{
-		$data['title'] = 'SimpleIPAM Top';
-		$this->load->view('template/header', $data);
-		$this->load->view('note');
-		$this->load->view('template/footer');
-	}
-*/
 }

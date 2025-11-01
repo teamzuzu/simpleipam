@@ -14,8 +14,7 @@ CREATE TABLE IF NOT EXISTS "hosts" (
 	`ip_address`	TEXT NOT NULL,
 	`subnet_mask`	TEXT NOT NULL,
 	`host`	TEXT,
-	`mac1`  TEXT,
-        `mac2`  TEXT,
+	`mac`  TEXT,
 	`note`	TEXT,
 	PRIMARY KEY(`id`)
 );
