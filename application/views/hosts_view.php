@@ -38,7 +38,8 @@
              <th width="100px">IP Address</th>
              <th width="100px">Subnet mask</th>
              <th>Host</th>
-             <th>MAC</th>
+             <th>Mac1</th>
+             <th>Mac2</th>
              <th>Note</th>
              <th width="120px">Operation</th>
          </tr>
@@ -49,7 +50,8 @@
              <td><?php echo $host['ip_address']; ?></td>
              <td><?php echo $host['subnet_mask']; ?></td>
              <td><?php echo $host['host']; ?></td>
-             <td><?php echo $host['mac_address']; ?></td>
+             <td><?php echo $host['mac1']; ?></td>
+             <td><?php echo $host['mac2']; ?></td>
              <td><?php echo $host['note']; ?></td>
              <td>
                   <button class="btn btn-warning btn-xs" onclick="edit_host(<?php echo $host['id'];?>)">

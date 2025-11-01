@@ -127,13 +127,11 @@ class Ipam extends CI_Model {
     function get_hosts($limit, $start, $st = NULL)
     {
         if ($st == "NIL") $st = "";
-        //$sql = "select * from hosts where ip_addr like '%$st%' limit " . $start . ", " . $limit;
         $sql1 = " select * from hosts where ip_address like '%$st%' ";
-        $sql2 = " or host like '%$st%' or note like '%$st%' or mac_address like '%$st%' ";
+        $sql2 = " or host like '%$st%' or note like '%$st%' or mac1 like '%$st%' or mac2 like '%$st%'";
         // https://stackoverflow.com/questions/23092783/best-way-to-sort-by-ip-addresses-in-sql
-        //$sql_order = " order by ip_address ";
+        $sql_order = " order by ip_address ";
         //$sql_order = " order by CAST(substr(ip_address,1,instr(ip_address,'.')) AS NUMERIC) ";
-        $sql_order = " order by CAST(substr(trim(ip_address),1,instr(trim(ip_address),'.')-1) AS INTEGER), CAST(substr(substr(trim(ip_address),length(substr(trim(ip_address),1,instr(trim(ip_address),'.')))+1,length(ip_address)) ,1, instr(substr(trim(ip_address),length(substr(trim(ip_address),1,instr(trim(ip_address),'.')))+1,length(ip_address)),'.')-1) AS INTEGER), CAST(substr(substr(trim(ip_address),length(substr(substr(trim(ip_address),length(substr(trim(ip_address),1,instr(trim(ip_address),'.')))+1,length(ip_address)) ,1, instr(substr(trim(ip_address),length(substr(trim(ip_address),1,instr(trim(ip_address),'.')))+1,length(ip_address)),'.')))+length(substr(trim(ip_address),1,instr(trim(ip_address),'.')))+1,length(ip_address)) ,1, instr(substr(trim(ip_address),length(substr(substr(trim(ip_address),length(substr(trim(ip_address),1,instr(trim(ip_address),'.')))+1,length(ip_address)) ,1, instr(substr(trim(ip_address),length(substr(trim(ip_address),1,instr(trim(ip_address),'.')))+1,length(ip_address)),'.')))+length(substr(trim(ip_address),1,instr(trim(ip_address),'.')))+1,length(ip_address)),'.')-1) AS INTEGER), CAST(substr(trim(ip_address),length(substr(substr(trim(ip_address),length(substr(substr(trim(ip_address),length(substr(trim(ip_address),1,instr(trim(ip_address),'.')))+1,length(ip_address)) ,1, instr(substr(trim(ip_address),length(substr(trim(ip_address),1,instr(trim(ip_address),'.')))+1,length(ip_address)),'.')))+length(substr(trim(ip_address),1,instr(trim(ip_address),'.')))+1,length(ip_address)) ,1, instr(substr(trim(ip_address),length(substr(substr(trim(ip_address),length(substr(trim(ip_address),1,instr(trim(ip_address),'.')))+1,length(ip_address)) ,1, instr(substr(trim(ip_address),length(substr(trim(ip_address),1,instr(trim(ip_address),'.')))+1,length(ip_address)),'.')))+length(substr(trim(ip_address),1,instr(trim(ip_address),'.')))+1,length(ip_address)),'.')))+ length(substr(trim(ip_address),1,instr(trim(ip_address),'.')))+length(substr(substr(trim(ip_address),length(substr(trim(ip_address),1,instr(trim(ip_address),'.')))+1,length(ip_address)) ,1, instr(substr(trim(ip_address),length(substr(trim(ip_address),1,instr(trim(ip_address),'.')))+1,length(ip_address)),'.')))+1,length(trim(ip_address))) AS INTEGER) ";
         $sql_limit = " limit " . $start . ", " . $limit;
         $sql = "$sql1 $sql2 $sql_order $sql_limit";
         $query = $this->db->query($sql);
@@ -146,7 +144,7 @@ class Ipam extends CI_Model {
         if ($st == "NIL") $st = "";
         //$sql = "select * from hosts where hosts like '%$st%'";
         $sql1 = "select * from hosts where ip_address like '%$st%' ";
-        $sql2 = " or host like '%$st%' or note like '%$st%' ";
+        $sql2 = " or host like '%$st%' or note like '%$st%' or mac1 like '%$st%' or mac2 like '%$st%'";
         $sql = "$sql1 $sql2";
         $query = $this->db->query($sql);
         return $query->num_rows();
@@ -158,7 +156,8 @@ class Ipam extends CI_Model {
         $this->db->like('ip_address', "$str");
         $this->db->or_like('host', $str); 
         $this->db->or_like('note', $str); 
-        $this->db->or_like('mac_address', $str);
+        $this->db->or_like('mac1', $str);
+        $this->db->or_like('mac2', $str);
         $this->db->order_by("hosts", "ASC"); 
         $query = $this->db->get('hosts');
 
@@ -176,7 +175,6 @@ class Ipam extends CI_Model {
         $this->db->from("hosts");
 		$this->db->where('id',$id);
 		$query = $this->db->get();
- 
 		return $query->row();
 	}
 
