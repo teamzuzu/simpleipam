@@ -143,17 +143,13 @@ class Networks extends CI_Controller {
     }
 
 	
-	public function networks_add()
-	{
-        $this->_validate();
+	public function networks_add(){
+        	$this->_validate();
 		$data = array(
-				'networks' => $this->input->post('networks'),
-				'cidr' => $this->input->post('cidr'),
-				'broadcast_address' => $this->input->post('broadcast_address'),
-				'vlan_id' => $this->input->post('vlan_id'),
-				'note1' => $this->input->post('note1'),
-				'note2' => $this->input->post('note2'),
-			);
+		  'network' => $this->input->post('network'),
+		  'cidr' => $this->input->post('cidr'),
+		  'note' => $this->input->post('note1'),
+		);
 		$insert = $this->Ipam->networks_add($data);
 		echo json_encode(array("status" => TRUE));
 	}
@@ -166,16 +162,12 @@ class Networks extends CI_Controller {
 	}
 
 
-	public function networks_update()
-	{
-    $this->_validate();
+	public function networks_update(){
+        	$this->_validate();
 	$data = array(
 		'networks' => $this->input->post('networks'),
 		'cidr' => $this->input->post('cidr'),
-		'broadcast_address' => $this->input->post('broadcast_address'),
-		'vlan_id' => $this->input->post('vlan_id'),
-		'note1' => $this->input->post('note1'),
-		'note2' => $this->input->post('note2'),
+		'note' => $this->input->post('note'),
 		);
 	$this->Ipam->networks_update(array('id' => $this->input->post('id')), $data);
 	echo json_encode(array("status" => TRUE));
@@ -196,10 +188,10 @@ class Networks extends CI_Controller {
         $data['inputerror'] = array();
         $data['status'] = TRUE;
  
-        if($this->input->post('networks') == '')
+        if($this->input->post('network') == '')
         {
-            $data['inputerror'][] = 'networks';
-            $data['error_string'][] = 'Networks is required';
+            $data['inputerror'][] = 'network';
+            $data['error_string'][] = 'Network is required';
             $data['status'] = FALSE;
         }
 
@@ -218,23 +210,6 @@ class Networks extends CI_Controller {
             $data['status'] = FALSE;
         }
 
-        /* 
-        if($this->input->post('cidr') == '')
-        {
-            $data['inputerror'][] = 'cidr';
-            $data['error_string'][] = 'Cidr is required';
-            $data['status'] = FALSE;
-        }
-        */
- 
-        if($this->input->post('broadcast_address') == '')
-        {
-            $data['inputerror'][] = 'broadcast_address';
-            $data['error_string'][] = 'Broadcast Address is required';
-            $data['status'] = FALSE;
-        }
-
- 
         if($data['status'] === FALSE)
         {
             echo json_encode($data);
@@ -261,8 +236,7 @@ class Networks extends CI_Controller {
 		$file_name = 'networks_'.date("Y-m-d h-i-s").'.csv';
 		$delimiter = ",";
         $newline = "\r\n";
-        $sql_order = " order by CAST(substr(trim(networks),1,instr(trim(networks),'.')-1) AS INTEGER), CAST(substr(substr(trim(networks),length(substr(trim(networks),1,instr(trim(networks),'.')))+1,length(networks)) ,1, instr(substr(trim(networks),length(substr(trim(networks),1,instr(trim(networks),'.')))+1,length(networks)),'.')-1) AS INTEGER), CAST(substr(substr(trim(networks),length(substr(substr(trim(networks),length(substr(trim(networks),1,instr(trim(networks),'.')))+1,length(networks)) ,1, instr(substr(trim(networks),length(substr(trim(networks),1,instr(trim(networks),'.')))+1,length(networks)),'.')))+length(substr(trim(networks),1,instr(trim(networks),'.')))+1,length(networks)) ,1, instr(substr(trim(networks),length(substr(substr(trim(networks),length(substr(trim(networks),1,instr(trim(networks),'.')))+1,length(networks)) ,1, instr(substr(trim(networks),length(substr(trim(networks),1,instr(trim(networks),'.')))+1,length(networks)),'.')))+length(substr(trim(networks),1,instr(trim(networks),'.')))+1,length(networks)),'.')-1) AS INTEGER), CAST(substr(trim(networks),length(substr(substr(trim(networks),length(substr(substr(trim(networks),length(substr(trim(networks),1,instr(trim(networks),'.')))+1,length(networks)) ,1, instr(substr(trim(networks),length(substr(trim(networks),1,instr(trim(networks),'.')))+1,length(networks)),'.')))+length(substr(trim(networks),1,instr(trim(networks),'.')))+1,length(networks)) ,1, instr(substr(trim(networks),length(substr(substr(trim(networks),length(substr(trim(networks),1,instr(trim(networks),'.')))+1,length(networks)) ,1, instr(substr(trim(networks),length(substr(trim(networks),1,instr(trim(networks),'.')))+1,length(networks)),'.')))+length(substr(trim(networks),1,instr(trim(networks),'.')))+1,length(networks)),'.')))+ length(substr(trim(networks),1,instr(trim(networks),'.')))+length(substr(substr(trim(networks),length(substr(trim(networks),1,instr(trim(networks),'.')))+1,length(networks)) ,1, instr(substr(trim(networks),length(substr(trim(networks),1,instr(trim(networks),'.')))+1,length(networks)),'.')))+1,length(trim(networks))) AS INTEGER) ";
-		$query = $this->db->query('SELECT networks, cidr, broadcast_address, vlan_id, note1, note2 FROM networks WHERE 1'.$sql_order);
+		$query = $this->db->query('SELECT networks, cidr, broadcast_address, vlan_id, note1, note2 FROM networks WHERE 1');
 		$this->load->dbutil();
 		$data = $this->dbutil->csv_from_result($query, $delimiter, $newline);
 		$this->load->helper('download');
@@ -298,10 +272,7 @@ class Networks extends CI_Controller {
                     $insert_data = array(
                         'networks'=>$row['networks'],
                         'cidr'=>$row['cidr'],
-						'broadcast_address'=>$row['broadcast_address'],
-						'vlan_id'=>$row['vlan_id'],
-						'note1'=>$row['note1'],
-						'note2'=>$row['note2'],
+			'note'=>$row['note'],
                     );
                     $this->Ipam->networks_insert_csv($insert_data);
                 }

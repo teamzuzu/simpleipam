@@ -135,12 +135,9 @@
         success: function(data)
         {
             $('[name="id"]').val(data.id);
-            $('[name="networks"]').val(data.networks);
+            $('[name="network"]').val(data.network);
             $('[name="cidr"]').val(data.cidr);
-            $('[name="broadcast_address"]').val(data.broadcast_address);
-            $('[name="vlan_id"]').val(data.vlan_id);
-            $('[name="note1"]').val(data.note1);
-            $('[name="note2"]').val(data.note2);
+            $('[name="note"]').val(data.note);
 
             $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
             $('.modal-title').text('Edit Network'); // Set title to Bootstrap modal title
@@ -240,7 +237,7 @@
             <div class="form-group">
               <label class="control-label col-md-3">Networks</label>
               <div class="col-md-6">
-                <input name="networks" placeholder="192.168.100.0" class="form-control" type="text">
+                <input name="network" placeholder="192.168.100.0" class="form-control" type="text">
                 <span class="help-block"></span>
               </div>
               <div class="col-md-3">
