@@ -183,7 +183,10 @@ table {
   border-spacing: 0;
   border-collapse: collapse;
 }
-td,
+/* ! td size */
+td {
+  font-size: 16px;
+}
 th {
   padding: 0;
 }

@@ -1,4 +1,5 @@
-FROM ghcr.io/teamzuzu/zuzu-devops:main
-RUN apt update  && apt-get install -yq php php-sqlite3
+FROM debian:stable-slim
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt update  && apt-get install --no-install-recommends -yq php-cli php-sqlite3
 RUN mkdir /simpleipam
 COPY . /simpleipam

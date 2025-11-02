@@ -277,8 +277,8 @@ div.DTTT_print_info h6 {
 }
 
 div.DTTT_print_info p {
-	font-size: 14px;
-	line-height: 20px;
+	font-size: 16px;
+	line-height: 36px;
 }
 
 div.dataTables_processing {

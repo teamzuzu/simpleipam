@@ -1,22 +1,39 @@
-PRAGMA foreign_keys=OFF;
-BEGIN TRANSACTION;
 CREATE TABLE IF NOT EXISTS "networks"(
         `id`    INTEGER NOT NULL,
-        `network`      TEXT NOT NULL,
+        `network` TEXT NOT NULL,
         `cidr`  INTEGER,
         `note` TEXT,
         PRIMARY KEY(`id`)
 );
+
 INSERT INTO networks VALUES(1,'10.0.1.0',25,'Production DMZ Operation US');
 INSERT INTO networks VALUES(2,'10.0.88.0',25,'Production DMZ Operation EU');
+INSERT INTO networks VALUES(3,'10.0.12.0',25,'Production DMZ Operation CN');
+INSERT INTO networks VALUES(4,'10.4.18.0',25,'Production DMZ Operation ZK');
+INSERT INTO networks VALUES(5,'10.0.23.0',24,'Production DMZ Operation EU2');
+INSERT INTO networks VALUES(6,'10.3.58.0',25,'Production DMZ Operation PT');
+INSERT INTO networks VALUES(7,'10.2.75.0',23,'Production DMZ Operation LOC-1');
+INSERT INTO networks VALUES(8,'10.0.42.0',25,'Production DMZ Operation NPOLE');
+
 CREATE TABLE IF NOT EXISTS "hosts" (
-	`id`	INTEGER NOT NULL,
-	`address`	TEXT NOT NULL,
-	`host`	TEXT,
+	`id` INTEGER NOT NULL,
+	`address`TEXT NOT NULL UNIQUE,
+	`host`	TEXT NOT NULL,
 	`mac`  TEXT,
 	`note`	TEXT,
 	PRIMARY KEY(`id`)
 );
+
 INSERT INTO hosts VALUES(1,'10.0.0.1','test-us','samplemac1', 'note');
-INSERT INTO hosts VALUES(2,'10.0.88.1','test-eu','samplemac2', 'note');
-COMMIT;
+INSERT INTO hosts VALUES(2,'10.0.18.1','test-eu','samplemac2', 'note');
+INSERT INTO hosts VALUES(3,'10.2.88.1','test-jice','samplemac2', 'note');
+INSERT INTO hosts VALUES(4,'10.0.38.1','test-xej','samplemac2', 'note');
+INSERT INTO hosts VALUES(5,'10.4.88.1','test-','samplemac2', 'note');
+INSERT INTO hosts VALUES(6,'10.0.58.1','test-eui1','samplemac2', ' ! note');
+INSERT INTO hosts VALUES(7,'10.6.88.1','test-euice','samplemac2', 'note');
+INSERT INTO hosts VALUES(8,'10.0.78.1','test-euiicoe','', 'note');
+INSERT INTO hosts VALUES(9,'10.0.88.1','test-cioe','samplemac2', 'note');
+INSERT INTO hosts VALUES(10,'10.9.88.1','test-','samplemac2', 'note');
+INSERT INTO hosts VALUES(11,'10.0.108.1','test-euUUU','samplemac2', 'note');
+INSERT INTO hosts VALUES(12,'10.11.88.1','test-cddccd','samplemac2', 'note');
+INSERT INTO hosts VALUES(13,'10.12.88.1','test-jkjk','fjkdjfkkdfjkfdj', 'note');

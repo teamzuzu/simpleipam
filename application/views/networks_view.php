@@ -211,7 +211,6 @@
       }
     }
 
-
     </script>
 
 
@@ -229,7 +228,7 @@
           <input type="hidden" value="" name="id"/>
           <div class="form-body">
             <div class="form-group">
-              <label class="control-label col-md-3">Networks</label>
+              <label class="control-label col-md-3">Network</label>
               <div class="col-md-6">
                 <input name="network" placeholder="192.168.100.0" class="form-control" type="text">
                 <span class="help-block"></span>
@@ -267,4 +266,3 @@
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
   <!-- End Bootstrap modal -->
-

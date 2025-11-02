@@ -10,7 +10,7 @@
           $attr = array("class" => "form-horizontal", "role" => "form", "id" => "form1", "name" => "form1");
           echo form_open("hosts/search", $attr);?>
               <div class="form-group">
-                  <div class="col-md-6">
+		  <div class="col-md-6">
                       <input class="form-control" id="host_name" name="host_name" placeholder="Search for hosts..." type="text" value="<?php echo set_value('host_name', $host_name); ?>" />
                   </div>
                   <div class="col-md-6">
