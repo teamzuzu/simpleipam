@@ -17,12 +17,11 @@ class Ipam extends CI_Model {
     function get_networks($limit, $start, $st = NULL)
     {
         if ($st == "NIL") $st = "";
-        $sql1 = " select * from networks where network like '%$st%' ";
-        $sql2 = " or note like '%$st%' ";
+        $sql = " select * from networks where network like '%$st%' or note like '%$st%'";
         $sql_order = " order by network ";
 	//$sql_order = " order by CAST(substr(networks,1,instr(networks,'.')) AS NUMERIC) ";
         $sql_limit = " limit " . $start . ", " . $limit;
-	$sql = "$sql1 $sql2 $sql_order $sql_limit";
+	$sql = "$sql $sql_order $sql_limit";
 	$query = $this->db->query($sql);
         return $query->result_array();
     }
@@ -30,9 +29,7 @@ class Ipam extends CI_Model {
     function get_networks_count($st = NULL)
     {
         if ($st == "NIL") $st = "";
-        $sql1 = "select * from networks where network like '%$st%' ";
-        $sql2 = "or note1 like '%$st%' ";
-        $sql = "$sql1 $sql2";
+        $sql = "select * from networks where network like '%$st%' or note like '%$st%'";
         $query = $this->db->query($sql);
         return $query->num_rows();
     }
@@ -70,8 +67,7 @@ class Ipam extends CI_Model {
 		return $this->db->affected_rows();
 	}
  
-	public function networks_delete_by_id($id)
-	{
+	public function networks_delete_by_id($id){
 		$this->db->where('id', $id);
 		$this->db->delete($this->table);
 	}
@@ -94,11 +90,10 @@ class Ipam extends CI_Model {
     function get_hosts($limit, $start, $st = NULL)
     {
         if ($st == "NIL") $st = "";
-        $sql1 = " select * from hosts where ip_address like '%$st%' ";
+        $sql1 = " select * from hosts where address like '%$st%' ";
         $sql2 = " or host like '%$st%' or note like '%$st%' or mac like '%$st%'";
         // https://stackoverflow.com/questions/23092783/best-way-to-sort-by-ip-addresses-in-sql
-        $sql_order = " order by ip_address ";
-        //$sql_order = " order by CAST(substr(ip_address,1,instr(ip_address,'.')) AS NUMERIC) ";
+        $sql_order = " order by address ";
         $sql_limit = " limit " . $start . ", " . $limit;
         $sql = "$sql1 $sql2 $sql_order $sql_limit";
         $query = $this->db->query($sql);
@@ -110,7 +105,7 @@ class Ipam extends CI_Model {
     {
         if ($st == "NIL") $st = "";
         //$sql = "select * from hosts where hosts like '%$st%'";
-        $sql1 = "select * from hosts where ip_address like '%$st%' ";
+        $sql1 = "select * from hosts where address like '%$st%' ";
         $sql2 = " or host like '%$st%' or note like '%$st%' or mac like '%$st%'";
         $sql = "$sql1 $sql2";
         $query = $this->db->query($sql);
@@ -120,7 +115,7 @@ class Ipam extends CI_Model {
 
     function hosts_search($str) {
         $str = urldecode($str); // for japanese
-        $this->db->like('ip_address', "$str");
+        $this->db->like('address', "$str");
         $this->db->or_like('host', $str); 
         $this->db->or_like('note', $str); 
         $this->db->or_like('mac', $str);
@@ -151,9 +146,7 @@ class Ipam extends CI_Model {
 		return $this->db->insert_id();
 	}
  
-	public function hosts_update($where, $data)
-	{
-		//$this->db->update($this->table, $data, $where);
+	public function hosts_update($where, $data){
 		$this->db->update("hosts", $data, $where);
 		return $this->db->affected_rows();
 	}
@@ -169,11 +162,6 @@ class Ipam extends CI_Model {
         $this->db->insert('hosts', $data);
     }
 
-
-    /*======================================================
-     * ETC
-     *======================================================
-    */
     private function _get_datatables_query()
     {
          
@@ -222,7 +210,4 @@ class Ipam extends CI_Model {
         $query = $this->db->get("hosts");
         return $query->result();
     }
-
-
-
 }

@@ -1,6 +1,6 @@
 <div class="container">
 
-  <h3>Hosts</h3>
+  <h2>Hosts</h2>
   
   <br />
 
@@ -33,19 +33,17 @@
     <table id="table_id" class="table table-striped table-bordered" cellspacing="0" width="100%">
       <thead>
          <tr>
-             <th width="100px">IP Address</th>
-             <th width="100px">Subnet mask</th>
-             <th>Host</th>
-             <th>Mac</th>
-             <th>Note</th>
+             <th width="100px">address</th>
+             <th width="150px">host</th>
+             <th width="150px">mac</th>
+             <th>note</th>
              <th width="120px">Operation</th>
          </tr>
       </thead>
 
          <?php foreach($hosts as $host): ?>
          <tr>
-             <td><?php echo $host['ip_address']; ?></td>
-             <td><?php echo $host['subnet_mask']; ?></td>
+             <td><?php echo $host['address']; ?></td>
              <td><?php echo $host['host']; ?></td>
              <td><?php echo $host['mac']; ?></td>
              <td><?php echo $host['note']; ?></td>
@@ -77,8 +75,7 @@
 </div>
 
 <!-- ================================================================================== -->
-<script src="<?php echo base_url('assets/jquery/jquery.min.js')?>"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="<?php echo base_url('assets/jquery/jquery.min.js')?>"></script>
     <script src="<?php echo base_url('assets/bootstrap/js/bootstrap.min.js')?>"></script>
     <script src="<?php echo base_url('assets/datatables/js/jquery.dataTables.min.js')?>"></script>
     <script src="<?php echo base_url('assets/datatables/js/ip-address.js')?>"></script>
@@ -134,8 +131,7 @@
         success: function(data)
         {
             $('[name="id"]').val(data.id);
-            $('[name="ip_address"]').val(data.ip_address);
-            $('[name="subnet_mask"]').val(data.subnet_mask);
+            $('[name="address"]').val(data.address);
             $('[name="host"]').val(data.host);
             $('[name="mac"]').val(data.mac);
             $('[name="note"]').val(data.note);
@@ -230,35 +226,28 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h3 class="modal-title">Hosts Form</h3>
       </div>
       <div class="modal-body form">
         <form action="#" id="form" class="form-horizontal">
           <input type="hidden" value="" name="id"/>
-          <div class="form-body">
+	  <div class="form-body">
+
             <div class="form-group">
-              <label class="control-label col-md-3">IP Address</label>
+              <label class="control-label col-md-3">address</label>
               <div class="col-md-6">
-                <input name="ip_address" placeholder="192.168.100.1" class="form-control" type="text">
+                <input name="address" placeholder="192.168.100.1" class="form-control" type="text">
                 <span class="help-block"></span>
               </div>
               <div class="col-md-3">
                 <p class="text-left">*Required</p>
               </div>
+	    </div>
+
             </div>
             <div class="form-group">
-              <label class="control-label col-md-3">Subnet mask</label>
-              <div class="col-md-6">
-                <input name="subnet_mask" placeholder="255.255.255.0" class="form-control" type="text">
-                <span class="help-block"></span>
-              </div>
-              <div class="col-md-3">
-                <p class="text-left">*Required</p>
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="control-label col-md-3">Host</label>
+              <label class="control-label col-md-3">host</label>
               <div class="col-md-6">
                 <input name="host" placeholder="test-server-01" class="form-control" type="text">
                 <span class="help-block"></span>
@@ -266,31 +255,32 @@
               <div class="col-md-3">
                 <p class="text-left">*Required</p>
               </div>
-            </div>
+	    </div>
+
+
             <div class="form-group">
               <label class="control-label col-md-3">mac</label>
               <div class="col-md-6">
-                <input name="mac" placeholder="test-server-01" class="form-control" type="text">
+                <input name="mac" placeholder="24:5e:be:32:df:75" class="form-control" type="text">
                 <span class="help-block"></span>
               </div>
               <div class="col-md-3">
                 <p class="text-left">*Required</p>
               </div>
-            </div>
+	    </div>
+
             <div class="form-group">
               <label class="control-label col-md-3">Note</label>
               <div class="col-md-9">
                  <input name="note" placeholder="" class="form-control" type="text">
-              </div>
-            </div>
- 
-          </div>
+	      </div>
+           </div>
         </form>
           </div>
           <div class="modal-footer">
             <button type="button" id="btnSave" onclick="save()" class="btn btn-primary">Save</button>
             <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-          </div>
+	  </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->

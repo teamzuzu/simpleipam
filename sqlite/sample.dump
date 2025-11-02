@@ -11,13 +11,12 @@ INSERT INTO networks VALUES(1,'10.0.1.0',25,'Production DMZ Operation US');
 INSERT INTO networks VALUES(2,'10.0.88.0',25,'Production DMZ Operation EU');
 CREATE TABLE IF NOT EXISTS "hosts" (
 	`id`	INTEGER NOT NULL,
-	`ip_address`	TEXT NOT NULL,
-	`subnet_mask`	TEXT NOT NULL,
+	`address`	TEXT NOT NULL,
 	`host`	TEXT,
 	`mac`  TEXT,
 	`note`	TEXT,
 	PRIMARY KEY(`id`)
 );
-INSERT INTO hosts VALUES(1,'10.0.0.1','255.255.255.0','test-us','samplemac1', 'note');
-INSERT INTO hosts VALUES(2,'10.0.88.1','255.255.255.0','test-eu','samplemac1', 'note');
+INSERT INTO hosts VALUES(1,'10.0.0.1','test-us','samplemac1', 'note');
+INSERT INTO hosts VALUES(2,'10.0.88.1','test-eu','samplemac2', 'note');
 COMMIT;

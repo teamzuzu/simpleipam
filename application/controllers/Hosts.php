@@ -135,8 +135,7 @@ class Hosts extends CI_Controller {
     	public function hosts_add(){
           $this->_validate();
 	  $data = array(
-	    'ip_address' => $this->input->post('ip_address'),
-            'subnet_mask' => $this->input->post('subnet_mask'),
+	    'address' => $this->input->post('address'),
             'host' => $this->input->post('host'),
             'mac' => $this->input->post('mac'),
             'note' => $this->input->post('note'),
@@ -154,8 +153,7 @@ class Hosts extends CI_Controller {
 	public function hosts_update(){
           $this->_validate();
 	  $data = array(
-	'ip_address' => $this->input->post('ip_address'),
-	'subnet_mask' => $this->input->post('subnet_mask'),
+	'address' => $this->input->post('address'),
 	'host' => $this->input->post('host'),
         'mac' => $this->input->post('mac'),
 	'note' => $this->input->post('note'),
@@ -179,27 +177,13 @@ class Hosts extends CI_Controller {
         $data['inputerror'] = array();
         $data['status'] = TRUE;
  
-        if($this->input->post('ip_address') == '')
+        if($this->input->post('address') == '')
         {
-            $data['inputerror'][] = 'ip_address';
+            $data['inputerror'][] = 'address';
             $data['error_string'][] = 'IP Address is required';
             $data['status'] = FALSE;
         }
 
-
-        $subnet_mask=$this->input->post('subnet_mask');
-        if (!is_numeric($subnet_mask))
-        {
-            $data['inputerror'][] = 'subnet_mask';
-            $data['error_string'][] = 'Subnet mask must be number';
-            $data['status'] = FALSE;
-        }
-        if($subnet_mask == '')
-        {
-            $data['inputerror'][] = 'subnet_mask';
-            $data['error_string'][] = 'Subnet mask is required';
-            $data['status'] = FALSE;
-        }
 
         if($this->input->post('host') == '')
         {

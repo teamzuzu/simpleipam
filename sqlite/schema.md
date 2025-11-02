@@ -11,8 +11,7 @@ CREATE TABLE IF NOT EXISTS "networks"(
 
 CREATE TABLE IF NOT EXISTS "hosts" (
 	`id`	INTEGER NOT NULL,
-	`ip_address`	TEXT NOT NULL,
-	`subnet_mask`	TEXT NOT NULL,
+	`address`	TEXT NOT NULL,
 	`host`	TEXT,
 	`mac`  TEXT,
 	`note`	TEXT,
