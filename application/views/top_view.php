@@ -1,8 +1,3 @@
 <div class="container">
-<img src=/assets/sipam.png>
-
-<?
-include "local.html"
->
-
-</div>
+<?php 
+include "local/index.html";

@@ -24,7 +24,7 @@ class Hosts extends CI_Controller {
         $config['base_url'] = site_url("hosts/search/NIL");
         $config['total_rows'] = $this->db->count_all('hosts');
         $data['total_rows'] = $config['total_rows'];
-        $config['per_page'] = "5";
+        $config['per_page'] = "10";
         $config["uri_segment"] = 4;
         $choice = $config["total_rows"]/$config["per_page"];
         $config["num_links"] = floor($choice);
@@ -70,24 +70,18 @@ class Hosts extends CI_Controller {
     function search()
     {
         $data["host_name"]="";    //this is form in header
-        //input search
-        // post
         $search = ($this->input->post("host_name"))? $this->input->post("host_name") : "NIL";
-        // get
         $search = ($this->uri->segment(3)) ? $this->uri->segment(3) : $search;
-        // url encode for japanese
         $search= urldecode($search);
-
         
         empty($search) ? $data["host_name"]="" : $data["host_name"]=$search;
         if($search == "NIL" ){ $data["host_name"]=""; }
-
 
         // pagination settings
         $config = array();
         $config['base_url'] = site_url("hosts/search/$search");
         $config['total_rows'] = $this->Ipam->get_hosts_count($search);
-        $config['per_page'] = "5";
+        $config['per_page'] = "10";
         $config["uri_segment"] = 4;
         $choice = $config["total_rows"]/$config["per_page"];
         $config["num_links"] = floor($choice);
