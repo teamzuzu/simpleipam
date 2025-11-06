@@ -12,7 +12,6 @@ class Networks extends CI_Controller {
         $this->load->helper('myip');
         
         //library
-	$this->load->library('session');
         $this->load->library('pagination');
 
         //model
