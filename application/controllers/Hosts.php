@@ -14,7 +14,7 @@ class Hosts extends CI_Controller {
 
     public function index() {
 
-#        $data["host_name"]="";
+        $data["host_name"]="";
 
         //pagination settings
         $config['base_url'] = site_url("hosts/search/NIL");

@@ -11,7 +11,7 @@
           echo form_open("hosts/search", $attr);?>
               <div class="form-group">
 		  <div class="col-md-6">
-                      <input class="form-control" id="host_name" name="host_name" placeholder="search for hosts" type="text" value=""/>
+		  <input class="form-control" id="host_name" name="host_name" placeholder="search for hosts" type="text" value="<?php echo set_value('host_name', $host_name); ?>"/>
                   </div>
                   <div class="col-md-6">
                       <input id="btn_search" name="btn_search" type="submit" class="btn btn-danger" value="Search" />
