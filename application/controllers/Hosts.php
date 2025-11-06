@@ -3,19 +3,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Hosts extends CI_Controller {
 
-  function __construct() {
-    parent::__construct();
+    function __construct() {
+        parent::__construct();
+        $this->load->helper('url');
+        $this->load->helper('form');
+        $this->load->helper('myip');
+        $this->load->library('pagination');
+        $this->load->model('Ipam');
+    }
 
-    $this->load->helper('url');
-    $this->load->helper('form');
-    $this->load->helper('myip');
-        
-    $this->load->library('pagination');
-
-    $this->load->model('Ipam');
-  }
-
-	public function index() {
+    public function index() {
 
         $data["host_name"]="";
 
@@ -47,6 +44,7 @@ class Hosts extends CI_Controller {
         $config['cur_tag_close'] = '</a></li>';
         $config['num_tag_open'] = '<li>';
         $config['num_tag_close'] = '</li>';
+
         $this->pagination->initialize($config);
 
         $data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
@@ -58,16 +56,16 @@ class Hosts extends CI_Controller {
         $data['total_rows'] = $config['total_rows'];
         $data['start'] = $data['page'] + 1;
         $data['end'] = $data['start'] + $config['per_page'] - 1 ;
+	    $data['title'] = 'SimpleIPAM Hosts';
 
-	$data['title'] = 'SimpleIPAM Hosts';
-	$this->load->view('template/header', $data);
-	$this->load->view('hosts_view');
-	$this->load->view('template/footer');
+	    $this->load->view('template/header', $data);
+	    $this->load->view('hosts_view');
+	    $this->load->view('template/footer');
 	}
 
 
-    function search()
-    {
+    function search(){
+
         $data["host_name"]="";    //this is form in header
         $search = ($this->input->post("host_name"))? $this->input->post("host_name") : "NIL";
         $search = ($this->uri->segment(3)) ? $this->uri->segment(3) : $search;
@@ -125,13 +123,13 @@ class Hosts extends CI_Controller {
     }
 
 	
-    	public function hosts_add(){
-          $this->_validate();
-	  $data = array(
-	    'address' => $this->input->post('address'),
-            'host' => $this->input->post('host'),
-            'mac' => $this->input->post('mac'),
-            'note' => $this->input->post('note'),
+   	public function hosts_add(){
+		$this->_validate();
+	    $data = array(
+	        'address' => $this->input->post('address'),
+    	        'host' => $this->input->post('host'),
+		'mac' => $this->input->post('mac'),
+            	'note' => $this->input->post('note'),
         	);
 		$insert = $this->Ipam->hosts_add($data);
 		echo json_encode(array("status" => TRUE));
@@ -144,42 +142,35 @@ class Hosts extends CI_Controller {
 
 
 	public function hosts_update(){
-          $this->_validate();
-	  $data = array(
-	'address' => $this->input->post('address'),
-	'host' => $this->input->post('host'),
+        $this->_validate();
+	    $data = array(
+	    'address' => $this->input->post('address'),
+	    'host' => $this->input->post('host'),
         'mac' => $this->input->post('mac'),
-	'note' => $this->input->post('note'),
+	    'note' => $this->input->post('note'),
 		);
-	$this->Ipam->hosts_update(array('id' => $this->input->post('id')), $data);
-	echo json_encode(array("status" => TRUE));
+	    $this->Ipam->hosts_update(array('id' => $this->input->post('id')), $data);
+	    echo json_encode(array("status" => TRUE));
 	}
-
 
 	public function hosts_delete($id){
 		$this->Ipam->hosts_delete_by_id($id);
 		echo json_encode(array("status" => TRUE));
 	}
 
-
-
-    private function _validate()
-    {
+    private function _validate(){
         $data = array();
         $data['error_string'] = array();
         $data['inputerror'] = array();
         $data['status'] = TRUE;
  
-        if($this->input->post('address') == '')
-        {
+        if($this->input->post('address') == ''){
             $data['inputerror'][] = 'address';
             $data['error_string'][] = 'IP Address is required';
             $data['status'] = FALSE;
         }
 
-
-        if($this->input->post('host') == '')
-        {
+        if($this->input->post('host') == ''){
             $data['inputerror'][] = 'host';
             $data['error_string'][] = 'host is required';
             $data['status'] = FALSE;
