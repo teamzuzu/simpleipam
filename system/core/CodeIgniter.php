@@ -185,15 +185,6 @@ if ( ! is_php('5.4'))
 
 /*
  * ------------------------------------------------------
- *  Start the timer... tick tock tick tock...
- * ------------------------------------------------------
- */
-	$BM =& load_class('Benchmark', 'core');
-	$BM->mark('total_execution_time_start');
-	$BM->mark('loading_time:_base_classes_start');
-
-/*
- * ------------------------------------------------------
  *  Instantiate the hooks class
  * ------------------------------------------------------
  */
@@ -374,9 +365,6 @@ if ( ! is_php('5.4'))
 		require_once APPPATH.'core/'.$CFG->config['subclass_prefix'].'Controller.php';
 	}
 
-	// Set a mark point for benchmarking
-	$BM->mark('loading_time:_base_classes_end');
-
 /*
  * ------------------------------------------------------
  *  Sanity checks
@@ -512,9 +500,6 @@ if ( ! is_php('5.4'))
  *  Instantiate the requested controller
  * ------------------------------------------------------
  */
-	// Mark a start point so we can benchmark the controller
-	$BM->mark('controller_execution_time_( '.$class.' / '.$method.' )_start');
-
 	$CI = new $class();
 
 /*
@@ -530,9 +515,6 @@ if ( ! is_php('5.4'))
  * ------------------------------------------------------
  */
 	call_user_func_array(array(&$CI, $method), $params);
-
-	// Mark a benchmark end point
-	$BM->mark('controller_execution_time_( '.$class.' / '.$method.' )_end');
 
 /*
  * ------------------------------------------------------
