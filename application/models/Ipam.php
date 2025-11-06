@@ -92,19 +92,16 @@ class Ipam extends CI_Model {
         if ($st == "NIL") $st = "";
         $sql1 = " select * from hosts where address like '%$st%' ";
         $sql2 = " or host like '%$st%' or note like '%$st%' or mac like '%$st%'";
-        // https://stackoverflow.com/questions/23092783/best-way-to-sort-by-ip-addresses-in-sql
         $sql_order = " order by address ";
         $sql_limit = " limit " . $start . ", " . $limit;
         $sql = "$sql1 $sql2 $sql_order $sql_limit";
         $query = $this->db->query($sql);
-        //return $query->result();
         return $query->result_array();
     }
     
     function get_hosts_count($st = NULL)
     {
         if ($st == "NIL") $st = "";
-        //$sql = "select * from hosts where hosts like '%$st%'";
         $sql1 = "select * from hosts where address like '%$st%' ";
         $sql2 = " or host like '%$st%' or note like '%$st%' or mac like '%$st%'";
         $sql = "$sql1 $sql2";

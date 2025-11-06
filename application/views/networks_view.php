@@ -11,7 +11,7 @@
           echo form_open("networks/search", $attr);?>
               <div class="form-group">
                   <div class="col-md-6">
-                      <input class="form-control" id="network_name" name="network_name" placeholder="Search for networks..." type="text" value="<?php echo set_value('network_name', $network_name); ?>" />
+                      <input class="form-control" id="network_name" name="network_name" placeholder="search for networks" type="text" value="<?php echo set_value('network_name', $network_name); ?>" />
                   </div>
                   <div class="col-md-6">
                       <input id="btn_search" name="btn_search" type="submit" class="btn btn-danger" value="Search" />
@@ -72,7 +72,6 @@
 
     </div>
 
-<!-- ================================================================================== -->
     <script src="<?php echo base_url('assets/jquery/jquery.min.js')?>"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="<?php echo base_url('assets/bootstrap/js/bootstrap.min.js')?>"></script>
@@ -91,9 +90,7 @@
           "oLanguage": {
           "sSearch": "Filter: "
           },
-          //order: [ [ 0, "asc" ] ],
           order: [ ],
-          //lengthMenu: [ 10, 20, 100, 300, 500, 750, 1000 ],
           displayLength: 1000,
           lengthChange: false,
           info: false,
@@ -212,8 +209,6 @@
     }
 
     </script>
-
-
  
   <!-- Bootstrap modal -->
   <div class="modal fade" id="modal_form" role="dialog">

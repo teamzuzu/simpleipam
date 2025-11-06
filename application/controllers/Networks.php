@@ -5,8 +5,6 @@ class Networks extends CI_Controller {
 
     function __construct() {
         parent::__construct();
-        
-        //helper
         $this->load->helper('url');
         $this->load->helper('form');
         $this->load->helper('myip');
@@ -27,7 +25,7 @@ class Networks extends CI_Controller {
         $config['base_url'] = site_url("networks/search/NIL");
         $config['total_rows'] = $this->db->count_all('networks');
         $data['total_rows'] = $config['total_rows'];
-        $config['per_page'] = "5";
+        $config['per_page'] = "10";
         $config["uri_segment"] = 4;
         $choice = $config["total_rows"]/$config["per_page"];
         $config["num_links"] = floor($choice);
@@ -87,7 +85,7 @@ class Networks extends CI_Controller {
         $config = array();
         $config['base_url'] = site_url("networks/search/$search");
         $config['total_rows'] = $this->Ipam->get_networks_count($search);
-        $config['per_page'] = "5";
+        $config['per_page'] = "10";
         $config["uri_segment"] = 4;
         $choice = $config["total_rows"]/$config["per_page"];
         $config["num_links"] = floor($choice);

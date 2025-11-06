@@ -14,7 +14,7 @@ class Hosts extends CI_Controller {
 
     public function index() {
 
-        $data["host_name"]="";
+#        $data["host_name"]="";
 
         //pagination settings
         $config['base_url'] = site_url("hosts/search/NIL");
@@ -105,7 +105,6 @@ class Hosts extends CI_Controller {
         $this->pagination->initialize($config);
 
         $data['page'] = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
-        // get netwroks list
         $data['hosts'] = $this->Ipam->get_hosts($config['per_page'], $data['page'], $search);
 
         $data['pagination'] = $this->pagination->create_links();
@@ -116,7 +115,7 @@ class Hosts extends CI_Controller {
 
 
         //load view
-	$data['title'] = 'SimpleIPAM Hosts';
+	#$data['title'] = 'SimpleIPAM Hosts';
 	$this->load->view('template/header', $data);
 	$this->load->view('hosts_view', $data );
 	$this->load->view('template/footer' );
@@ -124,15 +123,15 @@ class Hosts extends CI_Controller {
 
 	
    	public function hosts_add(){
-		$this->_validate();
-	    $data = array(
-	        'address' => $this->input->post('address'),
-    	        'host' => $this->input->post('host'),
-		'mac' => $this->input->post('mac'),
-            	'note' => $this->input->post('note'),
-        	);
-		$insert = $this->Ipam->hosts_add($data);
-		echo json_encode(array("status" => TRUE));
+          $this->_validate();
+	  $data = array(
+	    'address' => $this->input->post('address'),
+    	    'host' => $this->input->post('host'),
+	    'mac' => $this->input->post('mac'),
+            'note' => $this->input->post('note'),
+	  );
+	  $insert = $this->Ipam->hosts_add($data);
+	  echo json_encode(array("status" => TRUE));
 	}
 
 	public function ajax_edit($id){
@@ -146,7 +145,7 @@ class Hosts extends CI_Controller {
 	    $data = array(
 	    'address' => $this->input->post('address'),
 	    'host' => $this->input->post('host'),
-        'mac' => $this->input->post('mac'),
+            'mac' => $this->input->post('mac'),
 	    'note' => $this->input->post('note'),
 		);
 	    $this->Ipam->hosts_update(array('id' => $this->input->post('id')), $data);
