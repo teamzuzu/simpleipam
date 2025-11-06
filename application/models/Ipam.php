@@ -151,16 +151,11 @@ class Ipam extends CI_Model {
 		return $this->db->affected_rows();
 	}
 
-	public function hosts_delete_by_id($id)
-	{
+	public function hosts_delete_by_id($id){
 		$this->db->where('id', $id);
-        //$this->db->delete($this->table);
-        $this->db->delete("hosts");
+        	$this->db->delete("hosts");
 	}
 
-    public function hosts_insert_csv($data) {
-        $this->db->insert('hosts', $data);
-    }
 
     private function _get_datatables_query()
     {

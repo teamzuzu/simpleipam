@@ -1,40 +1,4 @@
 <?php
-/**
- * CodeIgniter
- *
- * An open source application development framework for PHP
- *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package	CodeIgniter
- * @author	EllisLab Dev Team
- * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (https://ellislab.com/)
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 1.0.0
- * @filesource
- */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
@@ -222,47 +186,6 @@ abstract class CI_DB_utility {
 
 		$query = $query->result_array();
 		return current($query);
-	}
-
-	// --------------------------------------------------------------------
-
-	/**
-	 * Generate CSV from a query result object
-	 *
-	 * @param	object	$query		Query result object
-	 * @param	string	$delim		Delimiter (default: ,)
-	 * @param	string	$newline	Newline character (default: \n)
-	 * @param	string	$enclosure	Enclosure (default: ")
-	 * @return	string
-	 */
-	public function csv_from_result($query, $delim = ',', $newline = "\n", $enclosure = '"')
-	{
-		if ( ! is_object($query) OR ! method_exists($query, 'list_fields'))
-		{
-			show_error('You must submit a valid result object');
-		}
-
-		$out = '';
-		// First generate the headings from the table column names
-		foreach ($query->list_fields() as $name)
-		{
-			$out .= $enclosure.str_replace($enclosure, $enclosure.$enclosure, $name).$enclosure.$delim;
-		}
-
-		$out = substr($out, 0, -strlen($delim)).$newline;
-
-		// Next blast through the result array and build out the rows
-		while ($row = $query->unbuffered_row('array'))
-		{
-			$line = array();
-			foreach ($row as $item)
-			{
-				$line[] = $enclosure.str_replace($enclosure, $enclosure.$enclosure, $item).$enclosure;
-			}
-			$out .= implode($delim, $line).$newline;
-		}
-
-		return $out;
 	}
 
 	// --------------------------------------------------------------------
