@@ -24,14 +24,14 @@ CREATE TABLE IF NOT EXISTS "hosts" (
 	PRIMARY KEY(`id`)
 );
 
-INSERT INTO hosts VALUES(1,'10.0.0.1','test-us','samplemac1', 'note');
-INSERT INTO hosts VALUES(2,'10.0.18.1','test-eu','samplemac2', 'note');
-INSERT INTO hosts VALUES(3,'10.2.88.1','test-jice','samplemac2', 'note');
+INSERT INTO hosts VALUES(1,'10.0.0.1','test-us','a0:4a:08:85:fc:a2', 'sources');
+INSERT INTO hosts VALUES(2,'10.0.18.1','test-eu','f0:0b:28:6a:79:66', 'fund');
+INSERT INTO hosts VALUES(3,'10.2.88.1','test-jice','70:4d:97:88:4a:87', 'dynamic');
 INSERT INTO hosts VALUES(4,'10.0.38.1','test-xej','samplemac2', 'note');
 INSERT INTO hosts VALUES(5,'10.4.88.1','test-','samplemac2', 'note');
 INSERT INTO hosts VALUES(6,'10.0.58.1','test-eui1','samplemac2', ' ! note');
 INSERT INTO hosts VALUES(7,'10.6.88.1','test-euice','samplemac2', 'note');
-INSERT INTO hosts VALUES(8,'10.0.78.1','test-euiicoe','', 'note');
+INSERT INTO hosts VALUES(8,'10.0.78.1','test-euiicoe','3e:1f:b5:da:b9:98', 'note');
 INSERT INTO hosts VALUES(9,'10.0.88.1','test-cioe','samplemac2', 'note');
 INSERT INTO hosts VALUES(10,'10.9.88.1','test-','samplemac2', 'note');
 INSERT INTO hosts VALUES(11,'10.0.108.1','test-euUUU','samplemac2', 'note');
