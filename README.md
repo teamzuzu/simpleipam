@@ -1,18 +1,17 @@
-# SimpleIPAM - Simple IP address management
+# SimpleIPAM - Simple IP address management gui
 
-Cut down version of the original in docker etc
+super lite version of the original created by https://github.com/kuritaka 
 
-
-## Using
-* Codeigniter 3.1.5 
-* Bootstrap v3.3.7
-* jQuery v3.2.1
-* DataTables 1.10.7
-
-## Configuration
+its a very very simple tool to manage your home network/lab
 
 
-### Change Per Page
-Edit $config['per_page'] in controllers/Networks.php and controllers/Hosts.php  
-For example, change  "5" to "300"  
+## changes
+
+* small sqllite schema changes after the addition of MAC's by https://github.com/dimxyp 
+
+* much clean up and simplification / removal of CodeIgnite stuff not required for this usecase 
+
+* support for a "uploaded" page to include eg a basic network diagram
+
+* container image and examples for docker kubernetes etc ( coming soon ) 
 

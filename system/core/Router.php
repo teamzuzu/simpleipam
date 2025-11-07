@@ -102,7 +102,6 @@ class CI_Router {
 			empty($routing['function'])   OR $this->set_method($routing['function']);
 		}
 
-		log_message('info', 'Router Class Initialized');
 	}
 
 	/**
@@ -271,7 +270,6 @@ class CI_Router {
 			2 => $method
 		);
 
-		log_message('debug', 'No URI present. Default controller set.');
 	}
 
 	// --------------------------------------------------------------------

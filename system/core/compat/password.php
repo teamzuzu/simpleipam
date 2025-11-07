@@ -124,7 +124,6 @@ if ( ! function_exists('password_hash'))
 				}
 				catch (Exception $e)
 				{
-					log_message('error', 'compat/password: Error while trying to use random_bytes(): '.$e->getMessage());
 					return FALSE;
 				}
 			}
@@ -136,7 +135,6 @@ if ( ! function_exists('password_hash'))
 			{
 				if (($fp = fopen($dev, 'rb')) === FALSE)
 				{
-					log_message('error', 'compat/password: Unable to open '.$dev.' for reading.');
 					return FALSE;
 				}
 
@@ -148,7 +146,6 @@ if ( ! function_exists('password_hash'))
 				{
 					if (($read = fread($fp, 16 - $read)) === FALSE)
 					{
-						log_message('error', 'compat/password: Error while reading from '.$dev.'.');
 						return FALSE;
 					}
 					$options['salt'] .= $read;
@@ -162,13 +159,11 @@ if ( ! function_exists('password_hash'))
 				$options['salt'] = openssl_random_pseudo_bytes(16, $is_secure);
 				if ($is_secure !== TRUE)
 				{
-					log_message('error', 'compat/password: openssl_random_pseudo_bytes() set the $cryto_strong flag to FALSE');
 					return FALSE;
 				}
 			}
 			else
 			{
-				log_message('error', 'compat/password: No CSPRNG available.');
 				return FALSE;
 			}
 

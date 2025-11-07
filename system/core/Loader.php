@@ -1,40 +1,4 @@
 <?php
-/**
- * CodeIgniter
- *
- * An open source application development framework for PHP
- *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package	CodeIgniter
- * @author	EllisLab Dev Team
- * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (https://ellislab.com/)
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 1.0.0
- * @filesource
- */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
@@ -138,7 +102,6 @@ class CI_Loader {
 		$this->_ci_ob_level = ob_get_level();
 		$this->_ci_classes =& is_loaded();
 
-		log_message('info', 'Loader Class Initialized');
 	}
 
 	// --------------------------------------------------------------------
@@ -146,7 +109,6 @@ class CI_Loader {
 	/**
 	 * Initializer
 	 *
-	 * @todo	Figure out a way to move this to the constructor
 	 *		without breaking *package_path*() methods.
 	 * @uses	CI_Loader::_ci_autoloader()
 	 * @used-by	CI_Controller::__construct()
@@ -621,7 +583,6 @@ class CI_Loader {
 
 				include_once($base_helper);
 				$this->_ci_helpers[$helper] = TRUE;
-				log_message('info', 'Helper loaded: '.$helper);
 				continue;
 			}
 
@@ -633,7 +594,6 @@ class CI_Loader {
 					include_once($path.'helpers/'.$helper.'.php');
 
 					$this->_ci_helpers[$helper] = TRUE;
-					log_message('info', 'Helper loaded: '.$helper);
 					break;
 				}
 			}
@@ -962,8 +922,6 @@ class CI_Loader {
 			include($_ci_path); // include() vs include_once() allows for multiple views with the same name
 		}
 
-		log_message('info', 'File loaded: '.$_ci_path);
-
 		// Return the file data if requested
 		if ($_ci_return === TRUE)
 		{
@@ -1062,8 +1020,6 @@ class CI_Loader {
 						return $this->_ci_init_library($class, '', $params, $object_name);
 					}
 				}
-
-				log_message('debug', $class.' class already loaded. Second attempt ignored.');
 				return;
 			}
 			// Does the file exist? No? Bummer...
@@ -1083,7 +1039,6 @@ class CI_Loader {
 		}
 
 		// If we got this far we were unable to find the requested class.
-		log_message('error', 'Unable to load the requested class: '.$class);
 		show_error('Unable to load the requested class: '.$class);
 	}
 
@@ -1124,7 +1079,6 @@ class CI_Loader {
 				}
 			}
 
-			log_message('debug', $library_name.' class already loaded. Second attempt ignored.');
 			return;
 		}
 
@@ -1143,10 +1097,6 @@ class CI_Loader {
 				{
 					return $this->_ci_init_library($library_name, $prefix, $params, $object_name);
 				}
-				else
-				{
-					log_message('debug', $path.' exists, but does not declare '.$prefix.$library_name);
-				}
 			}
 		}
 
@@ -1164,17 +1114,11 @@ class CI_Loader {
 					$prefix = config_item('subclass_prefix');
 					break;
 				}
-				else
-				{
-					log_message('debug', $path.' exists, but does not declare '.$subclass);
-				}
 			}
 		}
 
 		return $this->_ci_init_library($library_name, $prefix, $params, $object_name);
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Internal CI Library Instantiator
@@ -1244,7 +1188,6 @@ class CI_Loader {
 		// Is the class name valid?
 		if ( ! class_exists($class_name, FALSE))
 		{
-			log_message('error', 'Non-existent class: '.$class_name);
 			show_error('Non-existent class: '.$class_name);
 		}
 
@@ -1265,7 +1208,6 @@ class CI_Loader {
 		{
 			if ($CI->$object_name instanceof $class_name)
 			{
-				log_message('debug', $class_name." has already been instantiated as '".$object_name."'. Second attempt aborted.");
 				return;
 			}
 

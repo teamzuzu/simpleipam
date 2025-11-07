@@ -336,7 +336,6 @@ abstract class CI_DB_driver {
 			}
 		}
 
-		log_message('info', 'Database Driver Class Initialized');
 	}
 
 	// --------------------------------------------------------------------
@@ -393,8 +392,6 @@ abstract class CI_DB_driver {
 			// We still don't have a connection?
 			if ( ! $this->conn_id)
 			{
-				log_message('error', 'Unable to connect to the database');
-
 				if ($this->db_debug)
 				{
 					$this->display_error('db_unable_to_connect');
@@ -490,8 +487,6 @@ abstract class CI_DB_driver {
 	{
 		if (method_exists($this, '_db_set_charset') && ! $this->_db_set_charset($charset))
 		{
-			log_message('error', 'Unable to set database connection charset: '.$charset);
-
 			if ($this->db_debug)
 			{
 				$this->display_error('db_unable_to_set_charset', $charset);
@@ -573,7 +568,6 @@ abstract class CI_DB_driver {
 	{
 		if ($sql === '')
 		{
-			log_message('error', 'Invalid query: '.$sql);
 			return ($this->db_debug) ? $this->display_error('db_invalid_query') : FALSE;
 		}
 		elseif ( ! is_bool($return_object))
@@ -631,9 +625,6 @@ abstract class CI_DB_driver {
 			// Grab the error now, as we might run some additional queries before displaying the error
 			$error = $this->error();
 
-			// Log errors
-			log_message('error', 'Query error: '.$error['message'].' - Invalid query: '.$sql);
-
 			if ($this->db_debug)
 			{
 				// We call this function in order to roll-back queries
@@ -646,7 +637,6 @@ abstract class CI_DB_driver {
 					$this->trans_complete();
 					if ($trans_depth === $this->_trans_depth)
 					{
-						log_message('error', 'Database: Failure during an automated transaction commit/rollback!');
 						break;
 					}
 				}
@@ -833,14 +823,11 @@ abstract class CI_DB_driver {
 				$this->_trans_status = TRUE;
 			}
 
-			log_message('debug', 'DB Transaction Failure');
 			return FALSE;
 		}
 
 		return $this->trans_commit();
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Lets you retrieve the transaction flag to determine if it has failed
@@ -1639,30 +1626,6 @@ abstract class CI_DB_driver {
 			: FALSE;
 	}
 
-	// --------------------------------------------------------------------
-
-	/**
-	 * Initialize the Cache Class
-	 *
-	 * @return	bool
-	 */
-#	protected function _cache_init()
-#	{
-#		if ( ! class_exists('CI_DB_Cache', FALSE))
-#		{
-#			require_once(BASEPATH.'database/DB_cache.php');
-#		}
-#		elseif (is_object($this->CACHE))
-#		{
-#			return TRUE;
-#		}
-#
-#		$this->CACHE = new CI_DB_Cache($this); // pass db object to support multiple db connections and returned db objects
-#		return TRUE;
-#	}
-
-	// --------------------------------------------------------------------
-
 	/**
 	 * Close DB Connection
 	 *
@@ -1677,8 +1640,6 @@ abstract class CI_DB_driver {
 		}
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Close DB Connection
 	 *
@@ -1690,8 +1651,6 @@ abstract class CI_DB_driver {
 	{
 		$this->conn_id = FALSE;
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Display an error message
@@ -1717,9 +1676,6 @@ abstract class CI_DB_driver {
 			$message = is_array($error) ? $error : array(str_replace('%s', $swap, $LANG->line($error)));
 		}
 
-		// Find the most likely culprit of the error by going through
-		// the backtrace until the source file is no longer in the
-		// database folder.
 		$trace = debug_backtrace();
 		foreach ($trace as $call)
 		{
@@ -1746,8 +1702,6 @@ abstract class CI_DB_driver {
 		exit(8); // EXIT_DATABASE
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Protect Identifiers
 	 *
@@ -1755,19 +1709,6 @@ abstract class CI_DB_driver {
 	 * a couple functions in this class.
 	 * It takes a column or table name (optionally with an alias) and inserts
 	 * the table prefix onto it. Some logic is necessary in order to deal with
-	 * column names that include the path. Consider a query like this:
-	 *
-	 * SELECT hostname.database.table.column AS c FROM hostname.database.table
-	 *
-	 * Or a query with aliasing:
-	 *
-	 * SELECT m.member_id, m.member_name FROM members AS m
-	 *
-	 * Since the column name can include up to four segments (host, DB, table, column)
-	 * or also have an alias prefix, we need to do a bit of work to figure this out and
-	 * insert the table prefix (if it exists) in the proper position, and escape only
-	 * the correct identifiers.
-	 *
 	 * @param	string
 	 * @param	bool
 	 * @param	mixed
@@ -1792,13 +1733,6 @@ abstract class CI_DB_driver {
 			return $escaped_array;
 		}
 
-		// This is basically a bug fix for queries that use MAX, MIN, etc.
-		// If a parenthesis is found we know that we do not need to
-		// escape the data or add a prefix. There's probably a more graceful
-		// way to deal with this, but I'm not thinking of it -- Rick
-		//
-		// Added exception for single quotes as well, we don't want to alter
-		// literal strings. -- Narf
 		if (strcspn($item, "()'") !== strlen($item))
 		{
 			return $item;
@@ -1935,16 +1869,9 @@ abstract class CI_DB_driver {
 		return $item.$alias;
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Dummy method that allows Query Builder class to be disabled
 	 * and keep count_all() working.
-	 *
-	 * @return	void
 	 */
-	protected function _reset_select()
-	{
-	}
-
+	protected function _reset_select(){}
 }

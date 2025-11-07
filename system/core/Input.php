@@ -1,7 +1,4 @@
 <?php
-/**
- * CodeIgniter
- */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
@@ -109,8 +106,6 @@ class CI_Input {
 		$this->_enable_csrf		= (config_item('csrf_protection') === TRUE);
 		$this->_standardize_newlines	= (bool) config_item('standardize_newlines');
 
-		#$this->security =& load_class('Security', 'core');
-
 		// Sanitize global arrays
 		$this->_sanitize_globals();
 
@@ -120,10 +115,8 @@ class CI_Input {
 			$this->security->csrf_verify();
 		}
 
-		log_message('info', 'Input Class Initialized');
 	}
 
-	// --------------------------------------------------------------------
 
 	/**
 	 * Fetch from array
@@ -610,10 +603,7 @@ class CI_Input {
 		// Sanitize PHP_SELF
 		$_SERVER['PHP_SELF'] = strip_tags($_SERVER['PHP_SELF']);
 
-		log_message('debug', 'Global POST, GET and COOKIE data sanitized');
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Clean Input Data
@@ -661,10 +651,6 @@ class CI_Input {
 
 	/**
 	 * Clean Keys
-	 *
-	 * Internal method that helps to prevent malicious users
-	 * from trying to exploit keys we make sure that keys are
-	 * only named with alpha-numeric text and a few other items.
 	 *
 	 * @param	string	$str	Input string
 	 * @param	bool	$fatal	Whether to terminate script exection

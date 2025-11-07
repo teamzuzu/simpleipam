@@ -4,7 +4,7 @@
  * NOTE: If you change these, also change the error_reporting() code below
  */
 	define('ENVIRONMENT', 'production');
-	define('ENVIRONMENT', 'development');
+#	define('ENVIRONMENT', 'development');
 
 /*
  * ERROR REPORTING
@@ -42,8 +42,6 @@ $system_path = 'system';
 
 /*
  * APPLICATION DIRECTORY NAME
- * If you want this front controller to use a different "application"
- * directory than the default one you can set its name here. The directory
  * can also be renamed or relocated anywhere on your server. If you do,
  * use an absolute (full) server path.
  *
@@ -56,8 +54,6 @@ $application_folder = 'application';
  * NO TRAILING SLASH!
  */
 $view_folder = '';
-
-// END OF USER CONFIGURABLE SETTINGS.  DO NOT EDIT BELOW THIS LINE
 
 /*
  *  Resolve the system path for increased reliability

@@ -1,40 +1,4 @@
 <?php
-/**
- * CodeIgniter
- *
- * An open source application development framework for PHP
- *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package	CodeIgniter
- * @author	EllisLab Dev Team
- * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (https://ellislab.com/)
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 1.0.0
- * @filesource
- */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
@@ -72,8 +36,6 @@ if ( ! function_exists('is_php'))
 		return $_is_php[$version];
 	}
 }
-
-// ------------------------------------------------------------------------
 
 if ( ! function_exists('is_really_writable'))
 {
@@ -122,7 +84,6 @@ if ( ! function_exists('is_really_writable'))
 	}
 }
 
-// ------------------------------------------------------------------------
 
 if ( ! function_exists('load_class'))
 {
@@ -198,8 +159,6 @@ if ( ! function_exists('load_class'))
 	}
 }
 
-// --------------------------------------------------------------------
-
 if ( ! function_exists('is_loaded'))
 {
 	/**
@@ -221,8 +180,6 @@ if ( ! function_exists('is_loaded'))
 		return $_is_loaded;
 	}
 }
-
-// ------------------------------------------------------------------------
 
 if ( ! function_exists('get_config'))
 {
@@ -280,8 +237,6 @@ if ( ! function_exists('get_config'))
 	}
 }
 
-// ------------------------------------------------------------------------
-
 if ( ! function_exists('config_item'))
 {
 	/**
@@ -304,7 +259,6 @@ if ( ! function_exists('config_item'))
 	}
 }
 
-// ------------------------------------------------------------------------
 
 if ( ! function_exists('get_mimes'))
 {
@@ -333,7 +287,6 @@ if ( ! function_exists('get_mimes'))
 	}
 }
 
-// ------------------------------------------------------------------------
 
 if ( ! function_exists('is_https'))
 {
@@ -363,8 +316,6 @@ if ( ! function_exists('is_https'))
 		return FALSE;
 	}
 }
-
-// ------------------------------------------------------------------------
 
 if ( ! function_exists('is_cli'))
 {
@@ -442,35 +393,6 @@ if ( ! function_exists('show_404'))
 	}
 }
 
-// ------------------------------------------------------------------------
-
-if ( ! function_exists('log_message'))
-{
-	/**
-	 * Error Logging Interface
-	 *
-	 * We use this as a simple mechanism to access the logging
-	 * class and send messages to be logged.
-	 *
-	 * @param	string	the error level: 'error', 'debug' or 'info'
-	 * @param	string	the error message
-	 * @return	void
-	 */
-	function log_message($level, $message)
-	{
-		static $_log;
-
-		if ($_log === NULL)
-		{
-			// references cannot be directly assigned to static variables, so we use an array
-			$_log[0] =& load_class('Log', 'core');
-		}
-
-		$_log[0]->write_log($level, $message);
-	}
-}
-
-// ------------------------------------------------------------------------
 
 if ( ! function_exists('set_status_header'))
 {

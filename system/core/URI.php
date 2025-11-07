@@ -101,7 +101,6 @@ class CI_URI {
 			$this->_set_uri_string($uri);
 		}
 
-		log_message('info', 'URI Class Initialized');
 	}
 
 	// --------------------------------------------------------------------

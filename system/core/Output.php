@@ -1,40 +1,4 @@
 <?php
-/**
- * CodeIgniter
- *
- * An open source application development framework for PHP
- *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package	CodeIgniter
- * @author	EllisLab Dev Team
- * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (https://ellislab.com/)
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 1.0.0
- * @filesource
- */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
@@ -149,18 +113,10 @@ class CI_Output {
 
 		// Get mime types for later
 		$this->mimes =& get_mimes();
-
-		log_message('info', 'Output Class Initialized');
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Get Output
-	 *
-	 * Returns the current output string.
-	 *
-	 * @return	string
 	 */
 	public function get_output()
 	{
@@ -500,8 +456,6 @@ class CI_Output {
 			}
 
 			echo $output;
-			log_message('info', 'Final output sent to browser');
-			log_message('debug', 'Total execution time: '.$elapsed);
 			return;
 		}
 
@@ -537,15 +491,11 @@ class CI_Output {
 			echo $output; // Send it to the browser!
 		}
 
-#		log_message('info', 'Final output sent to browser');
-#		log_message('debug', 'Total execution time: '.$elapsed);
 	}
 
-	// --------------------------------------------------------------------
 
 	/**
 	 * Write Cache
-	 *
 	 * @param	string	$output	Output data to cache
 	 * @return	void
 	 */
@@ -557,7 +507,6 @@ class CI_Output {
 
 		if ( ! is_dir($cache_path) OR ! is_really_writable($cache_path))
 		{
-			log_message('error', 'Unable to write cache file: '.$cache_path);
 			return;
 		}
 
@@ -581,28 +530,13 @@ class CI_Output {
 
 		if ( ! $fp = @fopen($cache_path, 'w+b'))
 		{
-			log_message('error', 'Unable to write cache file: '.$cache_path);
 			return;
 		}
 
 		if ( ! flock($fp, LOCK_EX))
 		{
-			log_message('error', 'Unable to secure a file lock for file at: '.$cache_path);
 			fclose($fp);
 			return;
-		}
-
-		// If output compression is enabled, compress the cache
-		// itself, so that we don't have to do that each time
-		// we're serving it
-		if ($this->_compress_output === TRUE)
-		{
-			$output = gzencode($output);
-
-			if ($this->get_header('content-type') === NULL)
-			{
-				$this->set_content_type($this->mime_type);
-			}
 		}
 
 		$expire = time() + ($this->cache_expiration * 60);
@@ -629,18 +563,14 @@ class CI_Output {
 		if ( ! is_int($result))
 		{
 			@unlink($cache_path);
-			log_message('error', 'Unable to write the complete cache content at: '.$cache_path);
 			return;
 		}
 
 		chmod($cache_path, 0640);
-		log_message('debug', 'Cache file written: '.$cache_path);
 
 		// Send HTTP cache-control headers to browser to match file cache settings.
 		$this->set_cache_header($_SERVER['REQUEST_TIME'], $expire);
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Update/serve cached output
@@ -701,7 +631,6 @@ class CI_Output {
 		{
 			// If so we'll delete it.
 			@unlink($filepath);
-			log_message('debug', 'Cache file has expired. File deleted.');
 			return FALSE;
 		}
 
@@ -716,7 +645,6 @@ class CI_Output {
 
 		// Display the cache
 		$this->_display(self::substr($cache, self::strlen($match[0])));
-		log_message('debug', 'Cache file is current. Sending it to browser.');
 		return TRUE;
 	}
 
@@ -739,7 +667,6 @@ class CI_Output {
 
 		if ( ! is_dir($cache_path))
 		{
-			log_message('error', 'Unable to find cache path: '.$cache_path);
 			return FALSE;
 		}
 
@@ -764,7 +691,6 @@ class CI_Output {
 
 		if ( ! @unlink($cache_path))
 		{
-			log_message('error', 'Unable to delete cache file for '.$uri);
 			return FALSE;
 		}
 
