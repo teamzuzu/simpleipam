@@ -1,9 +1,8 @@
-# SimpleIPAM - Simple IP address management gui
+# SimpleIPAM 
 
 super lite version of the original created by https://github.com/kuritaka 
 
 its a very very simple tool to manage your home network/lab
-
 
 ## changes
 
