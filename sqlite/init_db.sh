@@ -30,7 +30,7 @@ if [[ ${ARG} == 'init' ]]; then
 fi
 
 # normal start  
-if [[ ! -f $DB ]]; then
+if [[ ! -s $DB ]]; then
   init_db
 fi
 echo  "db ready"
