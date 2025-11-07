@@ -4,16 +4,17 @@ super lite version of the original created by https://github.com/kuritaka
 
 its a very very simple tool to manage your home network/lab
 
-## docker 
+## Docker 
 
+steps to run with a local ipam.db and a directory for your own content
 
-### run with local ipam.db
+### Run with local ipam.db
+
 ```
 touch ipam.db ; docker run --name simpleipam --restart always  -v ./ipam.db:/simpleipam/sqlite/ipam.db -p 888:888 -d ghcr.io/teamzuzu/simpleipam:master
 ```
 
-
-## changes
+## Changes
 
 * small sqllite schema changes after the addition of MAC's by https://github.com/dimxyp 
 
