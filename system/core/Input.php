@@ -109,13 +109,7 @@ class CI_Input {
 		$this->_enable_csrf		= (config_item('csrf_protection') === TRUE);
 		$this->_standardize_newlines	= (bool) config_item('standardize_newlines');
 
-		$this->security =& load_class('Security', 'core');
-
-		// Do we need the UTF-8 class?
-		if (UTF8_ENABLED === TRUE)
-		{
-			$this->uni =& load_class('Utf8', 'core');
-		}
+		#$this->security =& load_class('Security', 'core');
 
 		// Sanitize global arrays
 		$this->_sanitize_globals();
@@ -652,12 +646,6 @@ class CI_Input {
 			$str = stripslashes($str);
 		}
 
-		// Clean UTF-8 if supported
-		if (UTF8_ENABLED === TRUE)
-		{
-			$str = $this->uni->clean_string($str);
-		}
-
 		// Remove control characters
 		$str = remove_invisible_characters($str, FALSE);
 
@@ -670,7 +658,6 @@ class CI_Input {
 		return $str;
 	}
 
-	// --------------------------------------------------------------------
 
 	/**
 	 * Clean Keys
@@ -701,16 +688,9 @@ class CI_Input {
 			}
 		}
 
-		// Clean UTF-8 if supported
-		if (UTF8_ENABLED === TRUE)
-		{
-			return $this->uni->clean_string($str);
-		}
-
 		return $str;
 	}
 
-	// --------------------------------------------------------------------
 
 	/**
 	 * Request Headers

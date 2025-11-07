@@ -1,66 +1,18 @@
 <?php
-/**
- * CodeIgniter
- *
- * An open source application development framework for PHP
- *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package	CodeIgniter
- * @author	EllisLab Dev Team
- * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (https://ellislab.com/)
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 1.0.0
- * @filesource
- */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
  * System Initialization File
- *
  * Loads the base classes and executes the request.
- *
- * @package		CodeIgniter
- * @subpackage	CodeIgniter
- * @category	Front-controller
- * @author		EllisLab Dev Team
- * @link		https://codeigniter.com/user_guide/
  */
 
 /**
  * CodeIgniter Version
- *
- * @var	string
- *
  */
-	const CI_VERSION = '3.1.5';
+const CI_VERSION = '3.1.5';
 
 /*
- * ------------------------------------------------------
  *  Load the framework constants
- * ------------------------------------------------------
  */
 	if (file_exists(APPPATH.'config/'.ENVIRONMENT.'/constants.php'))
 	{
@@ -73,17 +25,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	}
 
 /*
- * ------------------------------------------------------
  *  Load the global functions
- * ------------------------------------------------------
  */
 	require_once(BASEPATH.'core/Common.php');
 
 
 /*
- * ------------------------------------------------------
  * Security procedures
- * ------------------------------------------------------
  */
 
 if ( ! is_php('5.4'))
@@ -131,20 +79,14 @@ if ( ! is_php('5.4'))
 
 
 /*
- * ------------------------------------------------------
  *  Define a custom error handler so we can log PHP errors
- * ------------------------------------------------------
  */
 	set_error_handler('_error_handler');
 	set_exception_handler('_exception_handler');
 	register_shutdown_function('_shutdown_handler');
 
 /*
- * ------------------------------------------------------
  *  Set the subclass_prefix
- * ------------------------------------------------------
- *
- * Normally the "subclass_prefix" is set in the config file.
  * The subclass prefix allows CI to know if a core class is
  * being extended via a library in the local application
  * "libraries" folder. Since CI allows config items to be
@@ -152,8 +94,6 @@ if ( ! is_php('5.4'))
  * before proceeding we need to know if a subclass_prefix
  * override exists. If so, we will set this value now,
  * before any classes are loaded
- * Note: Since the config file data is cached it doesn't
- * hurt to load it here.
  */
 	if ( ! empty($assign_to_config['subclass_prefix']))
 	{
@@ -161,9 +101,7 @@ if ( ! is_php('5.4'))
 	}
 
 /*
- * ------------------------------------------------------
  *  Should we use a Composer autoloader?
- * ------------------------------------------------------
  */
 	if ($composer_autoload = config_item('composer_autoload'))
 	{
@@ -184,27 +122,12 @@ if ( ! is_php('5.4'))
 	}
 
 /*
- * ------------------------------------------------------
- *  Instantiate the hooks class
- * ------------------------------------------------------
- */
-	$EXT =& load_class('Hooks', 'core');
-
-/*
- * ------------------------------------------------------
  *  Is there a "pre_system" hook?
- * ------------------------------------------------------
  */
-	$EXT->call_hook('pre_system');
+#	$EXT->call_hook('pre_system');
 
 /*
- * ------------------------------------------------------
  *  Instantiate the config class
- * ------------------------------------------------------
- *
- * Note: It is important that Config is loaded first as
- * most other classes depend on it either directly or by
- * depending on another class that uses it.
  *
  */
 	$CFG =& load_class('Config', 'core');
@@ -219,14 +142,7 @@ if ( ! is_php('5.4'))
 	}
 
 /*
- * ------------------------------------------------------
  * Important charset-related stuff
- * ------------------------------------------------------
- *
- * Configure mbstring and/or iconv if they are enabled
- * and set MB_ENABLED and ICONV_ENABLED constants, so
- * that we don't repeatedly do extension_loaded() or
- * function_exists() calls.
  *
  * Note: UTF-8 class depends on this. It used to be done
  * in it's constructor, but it's _not_ class-specific.
@@ -270,9 +186,7 @@ if ( ! is_php('5.4'))
 	}
 
 /*
- * ------------------------------------------------------
  *  Load compatibility features
- * ------------------------------------------------------
  */
 
 	require_once(BASEPATH.'core/compat/mbstring.php');
@@ -281,68 +195,50 @@ if ( ! is_php('5.4'))
 	require_once(BASEPATH.'core/compat/standard.php');
 
 /*
- * ------------------------------------------------------
  *  Instantiate the UTF-8 class
- * ------------------------------------------------------
  */
-	$UNI =& load_class('Utf8', 'core');
+#	$UNI =& load_class('Utf8', 'core');
 
 /*
- * ------------------------------------------------------
  *  Instantiate the URI class
- * ------------------------------------------------------
  */
 	$URI =& load_class('URI', 'core');
 
 /*
- * ------------------------------------------------------
  *  Instantiate the routing class and set the routing
- * ------------------------------------------------------
  */
 	$RTR =& load_class('Router', 'core', isset($routing) ? $routing : NULL);
 
 /*
- * ------------------------------------------------------
  *  Instantiate the output class
- * ------------------------------------------------------
  */
 	$OUT =& load_class('Output', 'core');
 
 /*
- * ------------------------------------------------------
  *	Is there a valid cache file? If so, we're done...
- * ------------------------------------------------------
  */
-	if ($EXT->call_hook('cache_override') === FALSE && $OUT->_display_cache($CFG, $URI) === TRUE)
+	if ($OUT->_display_cache($CFG, $URI) === TRUE)
 	{
 		exit;
 	}
 
 /*
- * -----------------------------------------------------
  * Load the security class for xss and csrf support
- * -----------------------------------------------------
  */
-	$SEC =& load_class('Security', 'core');
+#	$SEC =& load_class('Security', 'core');
 
 /*
- * ------------------------------------------------------
  *  Load the Input class and sanitize globals
- * ------------------------------------------------------
  */
 	$IN	=& load_class('Input', 'core');
 
 /*
- * ------------------------------------------------------
  *  Load the Language class
- * ------------------------------------------------------
  */
 	$LANG =& load_class('Lang', 'core');
 
 /*
- * ------------------------------------------------------
  *  Load the app controller and local controller
- * ------------------------------------------------------
  *
  */
 	// Load the base controller class
@@ -366,18 +262,10 @@ if ( ! is_php('5.4'))
 	}
 
 /*
- * ------------------------------------------------------
  *  Sanity checks
- * ------------------------------------------------------
  *
  *  The Router class has already validated the request,
  *  leaving us with 3 options here:
- *
- *	1) an empty class name, if we reached the default
- *	   controller, but it didn't exist;
- *	2) a query string which doesn't go through a
- *	   file_exists() check
- *	3) a regular request for a non-existing page
  *
  *  We handle all of these as a 404 error.
  *
@@ -411,17 +299,6 @@ if ( ! is_php('5.4'))
 		{
 			$e404 = TRUE;
 		}
-		/**
-		 * DO NOT CHANGE THIS, NOTHING ELSE WORKS!
-		 *
-		 * - method_exists() returns true for non-public methods, which passes the previous elseif
-		 * - is_callable() returns false for PHP 4-style constructors, even if there's a __construct()
-		 * - method_exists($class, '__construct') won't work because CI_Controller::__construct() is inherited
-		 * - People will only complain if this doesn't work, even though it is documented that it shouldn't.
-		 *
-		 * ReflectionMethod::isConstructor() is the ONLY reliable check,
-		 * knowing which method will be executed as a constructor.
-		 */
 		elseif ( ! is_callable(array($class, $method)))
 		{
 			$reflection = new ReflectionMethod($class, $method);
@@ -489,53 +366,38 @@ if ( ! is_php('5.4'))
 	}
 
 /*
- * ------------------------------------------------------
  *  Is there a "pre_controller" hook?
- * ------------------------------------------------------
  */
-	$EXT->call_hook('pre_controller');
+#	$EXT->call_hook('pre_controller');
 
 /*
- * ------------------------------------------------------
  *  Instantiate the requested controller
- * ------------------------------------------------------
  */
 	$CI = new $class();
 
 /*
- * ------------------------------------------------------
  *  Is there a "post_controller_constructor" hook?
- * ------------------------------------------------------
  */
-	$EXT->call_hook('post_controller_constructor');
+#	$EXT->call_hook('post_controller_constructor');
 
 /*
- * ------------------------------------------------------
  *  Call the requested method
- * ------------------------------------------------------
  */
 	call_user_func_array(array(&$CI, $method), $params);
 
 /*
- * ------------------------------------------------------
  *  Is there a "post_controller" hook?
- * ------------------------------------------------------
  */
-	$EXT->call_hook('post_controller');
+#	$EXT->call_hook('post_controller');
 
 /*
- * ------------------------------------------------------
  *  Send the final rendered output to the browser
- * ------------------------------------------------------
  */
-	if ($EXT->call_hook('display_override') === FALSE)
-	{
 		$OUT->_display();
-	}
 
 /*
  * ------------------------------------------------------
  *  Is there a "post_system" hook?
  * ------------------------------------------------------
  */
-	$EXT->call_hook('post_system');
+#	$EXT->call_hook('post_system');

@@ -4,15 +4,10 @@
  * NOTE: If you change these, also change the error_reporting() code below
  */
 	define('ENVIRONMENT', 'production');
-#	define('ENVIRONMENT', 'development');
+	define('ENVIRONMENT', 'development');
 
 /*
- *---------------------------------------------------------------
  * ERROR REPORTING
- *---------------------------------------------------------------
- *
- * Different environments will require different levels of error reporting.
- * By default development will show errors but testing and live will hide them.
  */
 switch (ENVIRONMENT)
 {
@@ -41,17 +36,12 @@ switch (ENVIRONMENT)
 }
 
 /*
- *---------------------------------------------------------------
  * SYSTEM DIRECTORY NAME
- *---------------------------------------------------------------
  */
 $system_path = 'system';
 
 /*
- *---------------------------------------------------------------
  * APPLICATION DIRECTORY NAME
- *---------------------------------------------------------------
- *
  * If you want this front controller to use a different "application"
  * directory than the default one you can set its name here. The directory
  * can also be renamed or relocated anywhere on your server. If you do,
