@@ -20,6 +20,7 @@ spec:
           args:
             - |
               if [[ ! -s /local/ipam.db ]] ; then touch /local/ipam.db ; fi
+              if [[ ! -s /local/index.html ]] ; then touch /local/index.html ; fi
           volumeMounts:
             - name: local-data
               mountPath: '/local'
