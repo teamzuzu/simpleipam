@@ -20,7 +20,8 @@ docker run --name simpleipam  \
 -p 888:888 \ 
 -d ghcr.io/teamzuzu/simpleipam:master
 ```
-then goto yourdockerip:888 to access the interface
+
+in the logs you should see eg ```importing demo.sql to ipam.db``` then goto http://localhost:888 to access the interface
 
 ### Run with your own index page / documentation links 
 
@@ -40,9 +41,8 @@ docker run --name simpleipam  \
 to use images reference using the /local/ path like this
 
 ```
-<img src=/local/yeah.png>§
+<img src=/local/yeah.png>
 ```
-
 
 ### Docker compose
 
