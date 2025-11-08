@@ -19,7 +19,7 @@ spec:
           command: ["sh", "-xc"]
           args:
             - |
-              if [[ ! -s /local/ipam.db ]] ; then touch /local/ipam.db
+              if [[ ! -s /local/ipam.db ]] ; then touch /local/ipam.db ; fi
           volumeMounts:
             - name: local-data
               mountPath: '/local'
