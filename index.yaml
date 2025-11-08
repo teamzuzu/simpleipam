@@ -1,0 +1,13 @@
+apiVersion: v1
+entries:
+  simpleipam:
+  - apiVersion: v2
+    appVersion: latest
+    created: "2025-11-08T18:37:49.10942316Z"
+    description: A Helm chart for deploying SimpleIPAM
+    digest: 2bf8fbb87fc728eca22e4b59b96095552b64fb45d39d69d8ed88e2d9d9bc71e1
+    name: simpleipam
+    urls:
+    - https://teamzuzu.github.io/simpleipam/simpleipam-0.1.0.tgz
+    version: 0.1.0
+generated: "2025-11-08T18:37:49.108635968Z"
