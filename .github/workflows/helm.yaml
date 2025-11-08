@@ -26,7 +26,7 @@ jobs:
       - name: package helm chart
         run: |
           mkdir -p .deploy
-          helm package charts/simpleipam --destination .deploy
+          helm package chart/simpleipam --destination .deploy
 
       - name: Generate Helm repo index
         run: |
