@@ -1,4 +1,4 @@
-name: Publish Helm Chart to GitHub Pages
+name: helm
 
 on:
   workflow_dispatch:
@@ -26,7 +26,7 @@ jobs:
       - name: package helm chart
         run: |
           mkdir -p .deploy
-          helm package chart/simpleipam --destination .deploy
+          helm package chart --destination .deploy
 
       - name: Generate Helm repo index
         run: |
