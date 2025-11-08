@@ -1,16 +1,19 @@
 # SimpleIPAM 
 
-super lite version of the original created by https://github.com/kuritaka 
 
-its a very very simple tool to manage your home network/lab ip allocations
+![](./simpleipam.png)
+
+**super lite** version of the original created by https://github.com/kuritaka 
+
+its a very simple tool to manage your home network/lab ip allocations!
 
 ## Docker 
 
-steps to run with a local ipam.db and a directory for your own content
+steps to run with a local _ipam.db_ and a directory for your own content
 
 ### Run with local ipam.db
 
-create a blank ipam.db file and simpleipam will import a demo database on start up
+create a blank _ipam.db_ file and simpleipam will import a demo database on start up
 
 ```
 touch ipam.db 
@@ -25,7 +28,7 @@ in the logs you should see eg ```importing demo.sql to ipam.db``` then goto http
 
 ### Run with your own index page / documentation links 
 
-you can add a index.html and files for some local documentation / network diagrams etc
+you can add a _index.html_ and files for some local documentation / network diagrams etc
 
 ```
 mkdir local
