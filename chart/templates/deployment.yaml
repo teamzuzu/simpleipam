@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "simpleipam.fullname" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "simpleipam.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "simpleipam.name" . }}
+    spec:
+      containers:
+        - name: simpleipam
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.port }}
+          volumeMounts:
+            - name: ipam-db
+              mountPath: {{ .Values.persistence.dbPath }}
+              subPath: ipam.db
+            - name: local-data
+              mountPath: {{ .Values.persistence.localPath }}
+      volumes:
+        - name: ipam-db
+          persistentVolumeClaim:
+            claimName: ipam-db-pvc
+        - name: local-data
+          persistentVolumeClaim:
+            claimName: local-data-pvc

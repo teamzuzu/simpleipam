@@ -1,0 +1,40 @@
+name: Publish Helm Chart to GitHub Pages
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'chart/**'
+
+jobs:
+  release:
+    runs-on: self-hosted
+    permissions:
+      contents: write
+
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v4
+
+      - name: set up helm
+        uses: azure/setup-helm@v3
+        with:
+          version: v3.14.0
+
+      - name: package helm chart
+        run: |
+          mkdir -p .deploy
+          helm package charts/simpleipam --destination .deploy
+
+      - name: Generate Helm repo index
+        run: |
+          helm repo index .deploy --url https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: .deploy
+          publish_branch:  master
