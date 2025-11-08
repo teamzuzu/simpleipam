@@ -16,7 +16,7 @@ spec:
         - name: setup-simpleipam
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           image: ghcr.io/teamzuzu/zuzu-devops:main
-          command: ["sh", "-xc"]
+          command: ["bash", "-xc"]
           args:
             - |
               if [[ ! -s /local/ipam.db ]] ; then touch /local/ipam.db ; fi
