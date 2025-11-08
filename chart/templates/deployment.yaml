@@ -12,6 +12,17 @@ spec:
       labels:
         app: {{ include "simpleipam.name" . }}
     spec:
+      initContainers:
+        - name: setup-simpleipam
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          image: ghcr.io/teamzuzu/zuzu-devops:main
+          command: ["sh", "-xc"]
+          args:
+            - |
+              if [[ ! -s /local/ipam.db ]] ; then touch /local/ipam.db
+          volumeMounts:
+            - name: local-data
+              mountPath: '/local'
       containers:
         - name: simpleipam
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -19,15 +30,12 @@ spec:
           ports:
             - containerPort: {{ .Values.service.port }}
           volumeMounts:
-            - name: ipam-db
+            - name: local-data
               mountPath: {{ .Values.persistence.dbPath }}
               subPath: ipam.db
             - name: local-data
               mountPath: {{ .Values.persistence.localPath }}
       volumes:
-        - name: ipam-db
-          persistentVolumeClaim:
-            claimName: ipam-db-pvc
         - name: local-data
           persistentVolumeClaim:
             claimName: local-data-pvc
