@@ -1,12 +1,12 @@
 <div class="container">
 
   <h2>Hosts</h2>
-  
+
   <br />
 
   <div class="row">
       <div class="col-sm-6">
-          <?php 
+          <?php
           $attr = array("class" => "form-horizontal", "role" => "form", "id" => "form1", "name" => "form1");
           echo form_open("hosts/search", $attr);?>
               <div class="form-group">
@@ -34,7 +34,7 @@
       <thead>
          <tr>
              <th width="100px">address</th>
-             <th width="150px">host</th>
+             <th width="180px">host</th>
              <th width="150px">mac</th>
              <th>note</th>
              <th width="120px">Operation</th>
@@ -74,7 +74,6 @@
 
 </div>
 
-<!-- ================================================================================== -->
     <script src="<?php echo base_url('assets/jquery/jquery.min.js')?>"></script>
     <script src="<?php echo base_url('assets/bootstrap/js/bootstrap.min.js')?>"></script>
     <script src="<?php echo base_url('assets/datatables/js/jquery.dataTables.min.js')?>"></script>
@@ -86,7 +85,6 @@
     $(document).ready( function () {
 
         $('#table_id').DataTable({
-          // datatables/js/ip-address.js    This doesn't work well.
           columnDefs: [
             { type: 'ip-address', targets: [ 0 ] }
           ],
@@ -202,7 +200,6 @@
             dataType: "JSON",
             success: function(data)
             {
-               
                location.reload();
             },
             error: function (jqXHR, textStatus, errorThrown)
@@ -216,10 +213,6 @@
 
 
     </script>
-
-
-
-
 
   <!-- Bootstrap modal -->
   <div class="modal fade" id="modal_form" role="dialog">

@@ -3,31 +3,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Hosts extends CI_Controller {
 
-    function __construct() {
-        parent::__construct();
-        $this->load->helper('url');
-        $this->load->helper('form');
-        $this->load->helper('myip');
-        $this->load->library('pagination');
-        $this->load->model('Ipam');
-    }
+  function __construct() {
+    parent::__construct();
+      $this->load->helper('url');
+      $this->load->helper('form');
+      $this->load->helper('myip');
+      $this->load->library('pagination');
+      $this->load->model('Ipam');
+  }
 
-    public function index() {
+  public function index() {
 
-        $data["host_name"]="";
+    $data["host_name"]="";
 
-        //pagination settings
-        $config['base_url'] = site_url("hosts/search/NIL");
+    //pagination settings
+    $config['base_url'] = site_url("hosts/search/NIL");
         $config['total_rows'] = $this->db->count_all('hosts');
         $data['total_rows'] = $config['total_rows'];
         $config['per_page'] = "10";
         $config["uri_segment"] = 4;
         $choice = $config["total_rows"]/$config["per_page"];
-        $config["num_links"] = floor($choice);
+    $config["num_links"] = floor($choice);
 
-        // integrate bootstrap pagination
-        $config['full_tag_open'] = '<ul class="pagination">';
-        $config['full_tag_close'] = '</ul>';
+    // integrate bootstrap pagination
+    $config['full_tag_open'] = '<ul class="pagination">';
+    $config['full_tag_close'] = '</ul>';
         $config['first_link'] = false;
         $config['last_link'] = false;
         $config['first_tag_open'] = '<li>';
@@ -36,7 +36,7 @@ class Hosts extends CI_Controller {
         $config['prev_tag_open'] = '<li class="prev">';
         $config['prev_tag_close'] = '</li>';
         $config['next_link'] = 'Next';
-        $config['next_tag_open'] = '<li>';
+    $config['next_tag_open'] = '<li>';
         $config['next_tag_close'] = '</li>';
         $config['last_tag_open'] = '<li>';
         $config['last_tag_close'] = '</li>';
@@ -45,18 +45,17 @@ class Hosts extends CI_Controller {
         $config['num_tag_open'] = '<li>';
         $config['num_tag_close'] = '</li>';
 
-        $this->pagination->initialize($config);
+    $this->pagination->initialize($config);
+    $data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
-        $data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+    // get hosts list
+    $data['hosts'] = $this->Ipam->get_hosts($config["per_page"], $data['page'], NULL);
 
-        // get hosts list
-        $data['hosts'] = $this->Ipam->get_hosts($config["per_page"], $data['page'], NULL);
-
-        $data['pagination'] = $this->pagination->create_links();
+    $data['pagination'] = $this->pagination->create_links();
         $data['total_rows'] = $config['total_rows'];
         $data['start'] = $data['page'] + 1;
         $data['end'] = $data['start'] + $config['per_page'] - 1 ;
-	    $data['title'] = 'SimpleIPAM Hosts';
+	  $data['title'] = 'SimpleIPAM Hosts';
 
 	    $this->load->view('template/header', $data);
 	    $this->load->view('hosts_view');
@@ -64,27 +63,24 @@ class Hosts extends CI_Controller {
 	}
 
 
-    function search(){
-
-        $data["host_name"]="";    //this is form in header
+  function search(){
+    $data["host_name"]="";
         $search = ($this->input->post("host_name"))? $this->input->post("host_name") : "NIL";
-        $search = ($this->uri->segment(3)) ? $this->uri->segment(3) : $search;
+    $search = ($this->uri->segment(3)) ? $this->uri->segment(3) : $search;
         $search= urldecode($search);
-        
         empty($search) ? $data["host_name"]="" : $data["host_name"]=$search;
-        if($search == "NIL" ){ $data["host_name"]=""; }
 
-        // pagination settings
-        $config = array();
-        $config['base_url'] = site_url("hosts/search/$search");
+    if($search == "NIL" ){ $data["host_name"]=""; }
+
+    // pagination settings
+    $config = array();
+    $config['base_url'] = site_url("hosts/search/$search");
         $config['total_rows'] = $this->Ipam->get_hosts_count($search);
         $config['per_page'] = "10";
         $config["uri_segment"] = 4;
         $choice = $config["total_rows"]/$config["per_page"];
         $config["num_links"] = floor($choice);
-
-        // integrate bootstrap pagination
-        $config['full_tag_open'] = '<ul class="pagination">';
+    $config['full_tag_open'] = '<ul class="pagination">';
         $config['full_tag_close'] = '</ul>';
         $config['first_link'] = false;
         $config['last_link'] = false;
@@ -92,7 +88,7 @@ class Hosts extends CI_Controller {
         $config['first_tag_close'] = '</li>';
         $config['prev_link'] = 'Prev';
         $config['prev_tag_open'] = '<li class="prev">';
-        $config['prev_tag_close'] = '</li>';
+    $config['prev_tag_close'] = '</li>';
         $config['next_link'] = 'Next';
         $config['next_tag_open'] = '<li>';
         $config['next_tag_close'] = '</li>';
@@ -102,33 +98,31 @@ class Hosts extends CI_Controller {
         $config['cur_tag_close'] = '</a></li>';
         $config['num_tag_open'] = '<li>';
         $config['num_tag_close'] = '</li>';
-        $this->pagination->initialize($config);
+    $this->pagination->initialize($config);
 
-        $data['page'] = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
+    $data['page'] = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
         $data['hosts'] = $this->Ipam->get_hosts($config['per_page'], $data['page'], $search);
 
-        $data['pagination'] = $this->pagination->create_links();
+    $data['pagination'] = $this->pagination->create_links();
 
         $data['total_rows'] = $config['total_rows'];
-        $data['start'] = $data['page'] + 1;
-        $data['end'] = $data['start'] + $config['per_page'] - 1 ;
+    $data['start'] = $data['page'] + 1;
+    $data['end'] = $data['start'] + $config['per_page'] - 1 ;
+
+	  $data['title'] = 'SimpleIPAM Hosts';
+	  $this->load->view('template/header', $data);
+	  $this->load->view('hosts_view', $data );
+	  $this->load->view('template/footer' );
+  }
 
 
-        //load view
-	#$data['title'] = 'SimpleIPAM Hosts';
-	$this->load->view('template/header', $data);
-	$this->load->view('hosts_view', $data );
-	$this->load->view('template/footer' );
-    }
-
-	
-   	public function hosts_add(){
-          $this->_validate();
+ 	public function hosts_add(){
+    $this->_validate();
 	  $data = array(
 	    'address' => $this->input->post('address'),
-    	    'host' => $this->input->post('host'),
+ 	    'host' => $this->input->post('host'),
 	    'mac' => $this->input->post('mac'),
-            'note' => $this->input->post('note'),
+      'note' => $this->input->post('note'),
 	  );
 	  $insert = $this->Ipam->hosts_add($data);
 	  echo json_encode(array("status" => TRUE));
@@ -139,17 +133,16 @@ class Hosts extends CI_Controller {
 		echo json_encode($data);
 	}
 
-
 	public function hosts_update(){
-        $this->_validate();
-	    $data = array(
+    $this->_validate();
+    $data = array(
 	    'address' => $this->input->post('address'),
 	    'host' => $this->input->post('host'),
-            'mac' => $this->input->post('mac'),
+      'mac' => $this->input->post('mac'),
 	    'note' => $this->input->post('note'),
 		);
-	    $this->Ipam->hosts_update(array('id' => $this->input->post('id')), $data);
-	    echo json_encode(array("status" => TRUE));
+    $this->Ipam->hosts_update(array('id' => $this->input->post('id')), $data);
+    echo json_encode(array("status" => TRUE));
 	}
 
 	public function hosts_delete($id){
@@ -157,27 +150,27 @@ class Hosts extends CI_Controller {
 		echo json_encode(array("status" => TRUE));
 	}
 
-    private function _validate(){
-        $data = array();
-        $data['error_string'] = array();
+  private function _validate(){
+    $data = array();
+    $data['error_string'] = array();
         $data['inputerror'] = array();
-        $data['status'] = TRUE;
- 
-        if($this->input->post('address') == ''){
-            $data['inputerror'][] = 'address';
-            $data['error_string'][] = 'IP Address is required';
-            $data['status'] = FALSE;
-        }
+    $data['status'] = TRUE;
 
-        if($this->input->post('host') == ''){
+    if($this->input->post('address') == ''){
+      $data['inputerror'][] = 'address';
+      $data['error_string'][] = 'IP Address is required';
+      $data['status'] = FALSE;
+    }
+
+    if($this->input->post('host') == ''){
             $data['inputerror'][] = 'host';
             $data['error_string'][] = 'host is required';
-            $data['status'] = FALSE;
-        }
- 
-        if($data['status'] === FALSE){
-            echo json_encode($data);
-            exit();
-        }
+      $data['status'] = FALSE;
     }
+
+    if($data['status'] === FALSE){
+      echo json_encode($data);
+      exit();
+    }
+  }
 }
