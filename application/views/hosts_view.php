@@ -1,3 +1,4 @@
+<title>SimpleIPAM Hosts</title>
 <div class="container">
 
   <h2>Hosts</h2>

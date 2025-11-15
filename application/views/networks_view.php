@@ -1,3 +1,4 @@
+<title> SimpleIPAM Networks </title>
 <div class="container">
 
     <h2>Networks</h2>
