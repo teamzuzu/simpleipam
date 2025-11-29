@@ -65,6 +65,15 @@ services:
 networks: {}
 ```
 
+### Helm 
+
+values can be found here https://raw.githubusercontent.com/teamzuzu/simpleipam/refs/heads/master/chart/values.yaml
+
+```
+helm repo add teamzuzu https://teamzuzu.github.io/simpleipam/
+helm repo update
+helm install teamzuzu/simpleipam
+```
 
 ## Changes
 
