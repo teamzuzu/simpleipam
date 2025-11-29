@@ -10,7 +10,7 @@ service:
   port: 888
 
 persistence:
-  enabled: true
+  enabled: false
   accessMode: ReadWriteOnce
   size: 1Gi
   storageClassName: ""  # Set to "" for default or specify like "standard"
@@ -18,7 +18,7 @@ persistence:
   localPath: /simpleipam/local/
 
 ingress:
-  enabled: true
+  enabled: false
   className: nginx
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
