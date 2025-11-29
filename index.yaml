@@ -3,11 +3,11 @@ entries:
   simpleipam:
   - apiVersion: v2
     appVersion: latest
-    created: "2025-11-29T20:56:48.690432346Z"
+    created: "2025-11-29T21:06:59.4357093Z"
     description: helm chart for https://github.com/teamzuzu/simpleipam
-    digest: e5ea6b6994f1432dfdd2ebd92ec2687e17d54c59c3d2a1d9b5a726eb096b697d
+    digest: 8ae8eb9766988cfdb442a9396625725b8d1caae3c2bceeb1bd0785157b040138
     name: simpleipam
     urls:
     - https://teamzuzu.github.io/simpleipam/simpleipam-0.1.2.tgz
     version: 0.1.2
-generated: "2025-11-29T20:56:48.689584458Z"
+generated: "2025-11-29T21:06:59.43496813Z"
