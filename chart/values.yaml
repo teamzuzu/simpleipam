@@ -10,10 +10,10 @@ service:
   port: 888
 
 persistence:
-  enabled: false
+  enabled: true
   accessMode: ReadWriteOnce
   size: 1Gi
-  storageClassName: ""  # Set to "" for default or specify like "standard"
+  storageClassName: ""
   dbPath: /simpleipam/sqlite/ipam.db
   localPath: /simpleipam/local/
 
