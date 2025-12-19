@@ -83,5 +83,5 @@ helm install teamzuzu/simpleipam
 
 * support for a "uploaded" page to include eg a basic network diagram
 
-* container image and examples for docker kubernetes etc ( coming soon ) 
+* container image and examples for docker kubernetes etc 
 
