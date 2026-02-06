@@ -14,7 +14,8 @@
       <div class="container">
 
 	<div id="navbar-header">
-  <a class="navbar-brand" href="<?php echo base_url('/') ?>"><b>SimpleIPAM</b></a>
+<?php $site_title = getenv('SITE_TITLE') ?: 'SimpleIPAM'; ?>
+  <a class="navbar-brand" href="<?php echo base_url('/') ?>"><b><?php echo htmlspecialchars($site_title); ?></b></a>
 </div>
 	  <ul class="nav navbar-nav">
              <li><a href="<?php echo base_url('/') ?>Hosts">hosts</a></li>

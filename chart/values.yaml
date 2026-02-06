@@ -1,3 +1,5 @@
+siteTitle: "SimpleIPAM"
+
 replicaCount: 1
 
 image:

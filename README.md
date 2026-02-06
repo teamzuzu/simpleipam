@@ -47,6 +47,19 @@ to use images reference using the /local/ path like this
 <img src=/local/yeah.png>
 ```
 
+### Custom site title
+
+you can set the browser tab title by passing the `SITE_TITLE` environment variable (defaults to `SimpleIPAM`)
+
+```
+docker run --name simpleipam  \
+--restart always  \
+-e SITE_TITLE="My Network" \
+-v ./ipam.db:/simpleipam/sqlite/ipam.db \
+-p 888:888 \
+-d ghcr.io/teamzuzu/simpleipam:master
+```
+
 ### Docker compose
 
 you'll need to touch ipam.db and mkdir local and create an index.html
@@ -56,6 +69,8 @@ services:
   simpleipam:
     container_name: simpleipam
     restart: always
+    environment:
+      - SITE_TITLE=My Network
     volumes:
       - ./ipam.db:/simpleipam/sqlite/ipam.db
       - ./local/:/simpleipam/local/
@@ -65,14 +80,14 @@ services:
 networks: {}
 ```
 
-### Helm 
+### Helm
 
 values can be found here https://raw.githubusercontent.com/teamzuzu/simpleipam/refs/heads/master/chart/values.yaml
 
 ```
 helm repo add teamzuzu https://teamzuzu.github.io/simpleipam/
 helm repo update
-helm install teamzuzu/simpleipam
+helm install teamzuzu/simpleipam --set siteTitle="My Network"
 ```
 
 ## Changes
