@@ -1,4 +1,5 @@
-<title>SimpleIPAM Hosts</title>
+<?php $site_title = getenv('SITE_TITLE') ?: 'SimpleIPAM'; ?>
+<title><?php echo htmlspecialchars($site_title); ?> Hosts</title>
 <div class="container">
 
   <h2>Hosts</h2>

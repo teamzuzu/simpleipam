@@ -28,6 +28,9 @@ spec:
         - name: simpleipam
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: SITE_TITLE
+              value: {{ .Values.siteTitle | quote }}
           ports:
             - containerPort: {{ .Values.service.port }}
           volumeMounts:
